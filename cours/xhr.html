@@ -1,0 +1,18 @@
+<script>
+    let apikey = 'f1739d80d7f0995ce57277d5861a6566'
+    const city = 'Londres'
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
+
+    var xhr = variable = new XMLHttpRequest();
+
+    xhr.open("GET", url, true);
+    xhr.send()
+    //appelé si la réponse est reçue
+    xhr.onload = function () {
+        if (xhr.status != 200) { // analyze HTTP status of the response
+            console.log(`Error ${xhr.status}: ${xhr.statusText}`); // e.g. 404: Not Found
+        } else { // show the result
+            console.log(`${xhr.response}`); // response is the server
+        }
+    };
+</script>

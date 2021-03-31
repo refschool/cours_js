@@ -12,13 +12,15 @@ let var2 = [
     "Jean", //var2[1]
     "Dupont" //var2[2]
 ]
+
+// tableau d'objets
 let var3 = [
     { nom: "Jean", age: 23 }, // var3[0]
     { nom: "Sophie", age: 30 }, // var3[1]
     { nom: "Jacques", age: 12 } // var3[2]
 ]
 
-
+//tableau de tableaux
 let var4 = [
     ["Renault", "Peugeot"], //var4[0]     
     ["Audi", "BMW"], //var4[1]

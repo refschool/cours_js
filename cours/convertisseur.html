@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <title>convertisseur de température</title>
+</head>
+
+<body>
+    <h1>Convetisseur de température</h1>
+    <form action="#">
+
+        <label for="">T° Farenheit</label><br>
+        <input type="text" id="far"><br>
+        <label for="">T° Celsius</label><br>
+        <input type="text" id="cel" value="0"><br>
+    </form>
+</body>
+<script>
+    let far = document.getElementById('far')
+    let cel = document.getElementById('cel')
+
+    function convertToCelsius(temp) {
+        return (temp - 32) * 5 / 9
+    }
+
+    function convertToFarenheit(temp) {
+        return (temp * 1.8 + 32)
+    }
+    //alert(tcel)
+    //détection changement dans input
+    far.addEventListener('input', function (event) {
+        cel.value = convertToCelsius(far.value)
+    })
+
+    cel.addEventListener('input', function (event) {
+        far.value = convertToFarenheit(cel.value)
+    })
+
+</script>
+
+</html>

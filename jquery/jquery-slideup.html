@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <title>Jquery animations</title>
+    <script src='http://code.jquery.com/jquery-3.5.1.js'></script>
+</head>
+
+<body>
+    <style>
+        #boxwrapper {
+            background-color: red;
+            height: auto;
+            width: 300px;
+            border: solid 1px black;
+            cursor: pointer;
+        }
+
+        #box {
+            background-color: green;
+            height: 200px;
+            width: 100%;
+            border: solid 1px black;
+        }
+    </style>
+    <div id="boxwrapper">
+        <h2>Cliquez moi plusieurs fois</h2>
+        <div id="box">
+            Démonstration de Jquery animations
+            slideUp, FadeOut
+        </div>
+    </div>
+</body>
+<script>
+
+
+    $(function () {
+        $('#boxwrapper').on('click', function (e) {
+
+            $('#box').fadeToggle()
+
+        })
+    })
+</script>
+
+</html>

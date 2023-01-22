@@ -1,4 +1,4 @@
-let temperature = 0
+/*let temperature = 0
 
 fetch(url).then(response => response.json)
     .then(data => {
@@ -7,3 +7,22 @@ fetch(url).then(response => response.json)
     })
 
 console.log(temperature) // 0
+
+*/
+
+//  setInterval(func,delai)
+
+let secondes = 0
+
+function displaySeconde() {
+    if (secondes > 7) {
+        clearInterval(handle);
+    }
+    secondes = secondes + 1
+    console.log("Nombre de secondes écoulées : ", secondes);
+}
+
+
+let handle = setInterval(displaySeconde, 1000)
+
+

@@ -1,26 +1,42 @@
 <html>
 
 <head>
-    <title></title>
+    <title>METEO</title>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
         integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="temperature" style="position:relative">
-        <h1>Rome 17 °C </h1>
+    <div style="position:relative">
+        <h1 id="temperature">Température de la ville</h1>
     </div>
 </body>
 <script>
 
     let apikey = 'f1739d80d7f0995ce57277d5861a6566'
-    const city = 'Londres'
-    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
+    const city = 'Djakarta'
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}` // API endpoint
+
+    //console.dir(fetch(url))
+
+    fetch(url).then(response => response.json())
+        .then(data => {
+
+            console.log(data)
+            let temp = data.main.temp - 273
+
+            //injecter dans le tag h1
+            let elem = document.getElementById('temperature')
+            elem.textContent = `Température de ${city} ${temp}`
+        })
 
 
-    $(function () {
-        $('#temperature').prepend('<h1>Lyon 14°C</h1>')
-    })
+
+
+
+    /* $(function () {
+         $('#temperature').prepend('<h1>Lyon 14°C</h1>')
+     })*/
 </script>
 
 </html>

@@ -1,0 +1,43 @@
+// ==UserScript==
+// @name     illumnation indexation dans Google
+// @version  1
+// @grant    none
+// ==/UserScript==
+var urls = document.querySelectorAll('a')
+
+//  https://www.w3schools.com/jsref/prop_style_padding.asp
+// change color
+//urls[16].style.backgroundColor = "green" 
+//urls[16].style.color = "red" 
+urls[16].style.border = "2px solid red"
+urls[16].style.color = "red" 
+urls[16].style.padding = "4px" 
+
+/*urls = Array.from(urls)
+
+urls = urls.map((a) => a.getAttribute('href') )
+urls = urls.filter((a) => a != "#" )
+*/
+
+var indexed = ['https://www.formapedia.com/programme-formation-javascript/'
+,'https://www.formapedia.com/formation-python-debutant/'
+,'https://www.formapedia.com/formation-a-solidity/'
+,'https://www.formapedia.com/financer-sa-formation-toutes-les-pistes/'
+,'http://www.formapedia.com/le-blog-de-formapedia/'
+,'https://www.formapedia.com/comment-choisir-sa-formation-developpeur-web/'
+,'https://www.formapedia.com/financer-sa-formation-toutes-les-pistes/'
+,'http://www.formapedia.com/programme-formation-a-php/'             
+,'https://www.formapedia.com/formation-crypto-monnaie-cpf/'           
+]
+for(let i=0;i< urls.length;i++){
+  let ref = urls[i].getAttribute('href')
+     if(indexed.includes(ref)){
+         	console.log(ref,' is present')
+       		urls[i].style.border = "2px solid red"
+					urls[i].style.color = "red" 
+					urls[i].style.padding = "4px" 
+       
+       
+     }
+
+}

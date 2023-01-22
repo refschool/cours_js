@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>data demo</title>
+    <style>
+        div {
+            color: blue;
+        }
+
+        span {
+            color: red;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+
+<body>
+
+    <div>
+        The values stored were
+        <span id="typeFood" data-food="91">pizza</span>
+        and
+        <span></span>
+        et?
+        <span></span>
+    </div>
+
+    <script>
+        console.log($("#typeFood").attr("data-food"))
+    </script>
+
+</body>
+
+</html>

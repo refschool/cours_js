@@ -1,0 +1,24 @@
+<html>
+<!--6Le6v_0bAAAAAE4IC4gtwkXT1rkOKgj6Z-0u4EDN-->
+<!--secret   6Le6v_0bAAAAAK1bCxe7fhfRjiSkXM3FqZXm-3kn-->
+
+<head>
+    <title>recaptcha test</title>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+<meta robots="noindex">
+</head>
+
+<body>
+    <form action="" id="demo-form">
+        <input type="text" value=""><br>
+        <button class="g-recaptcha" data-sitekey="reCAPTCHA_site_key" data-callback='onSubmit'
+            data-action='submit'>Soumettre</button>
+    </form>
+</body>
+<script>
+    function onSubmit(token) {
+        document.getElementById("demo-form").submit();
+    }
+</script>
+
+</html>

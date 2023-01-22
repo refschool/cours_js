@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>This keyword</title>
+    <!-- EnlighterJS Resources !-->
+    <link rel="stylesheet" href="../../dist/enlighterjs.min.css" />
+</head>
+
+<body>
+    <style>
+        code {
+            border: solid 1px black;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: grey;
+        }
+    </style>
+
+
+    <main>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et dolore
+        <pre data-enlighter-language="js">window.addEvent('domready', async (a,b) => {});</pre> magna aliquyam erat.
+        </p>
+
+
+
+    </main>
+    <div>
+        <a
+            href="https://www.javascripttutorial.net/javascript-this/">https://www.javascripttutorial.net/javascript-this/</a>
+        <h2>context et this</h2>
+
+        <h2>This dans un objet</h2>
+
+        <pre>
+let counter = {
+    count: 0,
+    next: function () {
+        return ++this.count;
+    },
+};
+      
+      counter.next();
+</pre>
+
+
+        dans la fonction next, this se réfère à l'objet counter
+        <h2>This dans une fonction</h2>
+        <h3>cas du mode non strict</h3>
+        <pre data-enlighter-language="js">
+function show() {
+    console.log(this === window); // true
+    }
+    
+show();// context global window n'apparait pas mais c'est comme si
+
+true
+window.show();
+false
+            </pre>
+        <h3>cas du mode strict</h3>
+        <pre data-enlighter-language="js">
+"use strict";
+
+function show() {
+    console.log(this === undefined);
+}
+            
+show();
+truetrue
+
+window.show();
+falsetrue
+        </pre>
+
+
+        <h2>Function context</h2>
+        In JavaScript, you can call a function in the following ways:
+
+        Function invocation
+        Method invocation
+        Constructor invocation
+        Indirect invocation
+        Each function invocation defines its own context. Therefore, the this behaves differently.
+
+
+        <h3>Function invocation</h3>
+        <pre>
+
+function show() {
+    console.log(this === window); // true
+}
+
+show();
+</pre>
+
+        <h3>Method invocation (dans un objet)</h3>
+        <pre>
+
+    let car = {
+        brand: 'Honda',
+        getBrand: function () {
+            return this.brand;
+        }
+    }
+    
+    console.log(car.getBrand()); // Honda
+    
+    this refers to the car object
+    Since a method is a property of an object which is a value, you can store it in a variable.
+    let brand = car.getBrand;
+    console.log(brand()); // undefined
+    
+</pre>
+
+        <strong>When you call a method without specifying its object, JavaScript sets this to the global object in
+            non-strict mode and undefined in the strict mode.
+        </strong>
+        To fix this issue, you use the bind() method of the Function.prototype object. The bind() method creates a new
+        function whose the this keyword is set to a specified value.
+        <pre data-enlighter-language="js">
+            let brand = car.getBrand.bind(car); // set the context for the method
+        console.log(brand()); // Honda
+    </pre>
+
+        <h3>Emprunter une méthode à un autre objet</h3>
+        <pre>
+
+    let car = {
+        brand: 'Honda',
+        getBrand: function () {
+            return this.brand;
+        }
+    }
+    
+    let bike = {
+        brand: 'Harley Davidson'
+    }
+    
+    let brand = car.getBrand.bind(bike);
+    console.log(brand());
+</pre>
+
+        <h3>Constructor invocation</h3>
+        When you use the new keyword to create an instance of a <strong>function object</strong>, you use the function
+        as a
+        constructor.
+        <pre data-enlighter-language="js">
+            function Car(brand) {
+                this.brand = brand;
+            }
+            
+            Car.prototype.getBrand = function () {
+                return this.brand;
+            }
+            </pre>
+
+        <h4>Invocation avec new</h4>
+        <pre>
+
+let car = new Car('Honda');
+console.log(car.getBrand());
+</pre>
+        <h4>Invocation sans new</h4>
+        <pre>
+        var bmw = Car('BMW');
+        console.log(bmw.brand);
+        // => TypeError: Cannot read property 'brand' of undefined
+        Pour éviter cette errur d'inattention, on met une condition dans le constructeur
+        function Car(brand) {
+        if (!(this instanceof Car)) {
+        throw Error('Vous devez utiliser l'opérateur new pour appeler la fonction');
+        }
+        this.brand = brand;
+        }
+        </pre>
+
+        <h4>Nouveauté ES6</h4>
+        <pre>
+        function Car(brand) {
+        if (!new.target) {
+        throw Error('Must use the new operator to call the function');
+        }
+        this.brand = brand;
+        }
+        new.target === true si la fonction est utilisée en tant que constructeur
+
+    </pre>
+
+
+
+        <h3>Function Indirect invocation</h3>
+        tout fonction est de type Function, qui a deux méthodes call() et apply()
+        <pre data-enlighter-language="js">
+            function getBrand(prefix) {
+                console.log(prefix + this.brand);
+            }
+            
+            let honda = {
+                brand: 'Honda'
+            };
+            let audi = {
+                brand: 'Audi'
+            };
+            
+            getBrand.call(honda, "It's a ");//It's a Honda
+            getBrand.call(audi, "It's an ");/It's an Audi
+avec apply()  qui prend un array en paramètre
+            getBrand.apply(honda, ["It's a "]); // "It's a Honda"
+            getBrand.apply(audi, ["It's an "]); // "It's a Audi"
+        </pre>
+
+
+        <h3>ES6 particularité des fonctions flèches</h3>
+        Les fonction flèche ne créent pas leur propre contexte mais hérite du contexte de la fonction enveloppante
+        <pre data-enlighter-language="js">
+    let getThis = () => this;
+console.log(getThis() === window); // true
+</pre>
+        <pre data-enlighter-language="js">
+            function Car() {
+                this.speed = 120;
+              }
+              
+              Car.prototype.getSpeed = () => {
+                return this.speed;
+              };
+              
+              var car = new Car();
+              console.log(car.getSpeed()); // 👉 undefined
+        </pre>
+        getSpeed est une fonction flèche, donc le contexte observé par this est window (qui l'"enveloppe")
+    </div>
+</body>
+<script type="text/javascript" src="../../dist/enlighterjs.min.js"></script>
+<script type="text/javascript">
+    // INIT CODE - simple page-wide initialization based on css selectors
+    // - highlight all pre + code tags (CSS3 selectors)
+    // - use javascript as default language
+    // - use theme "enlighter" as default theme
+    // - replace tabs with 2 spaces
+    EnlighterJS.init('pre', 'code', {
+        language: 'javascript',
+        theme: 'dracula',
+        indent: 2
+    });
+</script>
+
+</html>

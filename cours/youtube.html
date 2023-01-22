@@ -1,0 +1,17 @@
+<script src="https://apis.google.com/js/api.js"></script>
+<script>
+
+    /*
+    https://console.developers.google.com/apis/api/youtubeoembed.googleapis.com/overview?project=129700666320
+    */
+    const apikey = "AIzaSyDUFm_S1KzuqPsL-s4rTUryqe9VGZaabdc"
+
+    var url = "https://www.youtube.com/watch?v=NFW9_mboFQo"
+    url = `http://www.youtube.com/oembed?url=${url}&format=json&key=${apikey}`
+
+
+
+    // let url = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key=${apikey}`
+    fetch(url).then(response => response.json())
+        .then(data => console.log(data))
+</script>

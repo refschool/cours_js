@@ -7,6 +7,11 @@ du plus petit au plus grand et inversément
 */
 
 let var1 = [10, 20, 30, 40, 50, 60, 70]
+
+
+
+
+
 let var2 = [
     "Toto", // élément accessible par var2[0]
     "Jean", //var2[1]
@@ -20,6 +25,12 @@ let var3 = [
     { nom: "Jacques", age: 12 } // var3[2]
 ]
 
+
+for (let i = var3.length - 1; i >= 0; i = i - 1) {
+    console.log(var3[i].nom)
+}
+
+
 //tableau de tableaux
 let var4 = [
     ["Renault", "Peugeot"], //var4[0]     
@@ -32,10 +43,7 @@ let obj = { nom: "Jean", age: 23 }
 let propriete = 'age'
 // console.log(obj[propriete])// plus flexible
 
-debugger
-for (let i = 0; i < 5; i++) {
-    console.log(i)
-}
+
 
 //Amazon
 let historiqueCommandes = [

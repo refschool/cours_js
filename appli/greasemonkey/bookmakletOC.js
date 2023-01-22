@@ -1,0 +1,1 @@
+var a = document.querySelectorAll('table');var b = Array.from(a)[0];var c = b.querySelectorAll('tbody tr').length;var h = document.querySelector('h1');h.innerText = `${h.innerText}  (${c})`;void(0);

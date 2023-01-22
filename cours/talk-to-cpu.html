@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        /* CSS */
+        * {
+            font-family: courier;
+            color: green;
+            background-color: black
+        }
+    </style>
+
+
+    <p id="ordi"></p>
+    <p id="msg"></p>
+</body>
+<script>
+    //var reponse = prompt('comment allez vous?')
+
+    var elem = document.getElementById('msg')
+    var ordi = document.getElementById('ordi')
+
+    var message = "comment allez vous?"
+    var i = 0
+    setInterval(function () {
+
+        if (i < message.length) {
+            ordi.textContent = ordi.innerHTML + message[i]
+            i++
+
+        }
+
+
+    }, 300)
+
+
+    //console.log(elem)
+    elem.textContent = "Vous : " + reponse
+
+</script>
+
+</html>

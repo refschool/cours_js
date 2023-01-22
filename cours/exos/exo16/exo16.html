@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo 16 - Tri</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    let liste = [65, 14, 22, 1, 10, 9, 18, 71, 56]
+    let liste_triee = []
+
+    function get_max(liste) {
+        let max = liste[0] // il est important de désigner un max dès le départ pour commencer l'algorithme
+        for (let i = 0; i < liste.length; i = i + 1) {
+            if (max < liste[i]) {
+                max = liste[i]
+            }
+        }
+
+        return max
+
+    }
+
+    while (liste.length > 0) {
+        let maximum = get_max(liste)
+        liste_triee.push(maximum)
+        //on cherche l'index du maximum trouvé
+        let indexMaximum = liste.indexOf(maximum)
+        // on enlève le plus grand élément trouvé à l'instant
+        liste.splice(indexMaximum, 1)
+
+    }
+
+
+    console.log("Liste triée : ")
+    console.log(liste_triee)
+
+
+</script>
+
+</html>

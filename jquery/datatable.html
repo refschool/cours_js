@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Datatable</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+        integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+</head>
+
+<body>
+    <style>
+        * {
+
+            font-family: arial;
+        }
+
+        .matable {
+            border-collapse: collapse;
+        }
+
+        td,
+        th {
+            border: solid 1px black;
+            padding: 4px;
+        }
+
+        th {
+            background-color: darkgreen;
+            color: white;
+        }
+
+        .matable .strip1 {
+            background-color: lightgray
+        }
+
+        .matable .strip2 {
+            background-color: lightpink
+        }
+
+        .matable .strip3 {
+            background-color: lightseagreen
+        }
+    </style>
+    <table class="matable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>Huynh</td>
+                <td>Yvon</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Nguyen</td>
+                <td>Duc Tien</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Dupont</td>
+                <td>Jean</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Martin</td>
+                <td>Louis</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Lalande</td>
+                <td>Renée</td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Dylan</td>
+                <td>Cécile</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>Descartes</td>
+                <td>Joe</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+</body>
+<script>
+    $(function () {
+        $('.matable').DataTable()
+    })
+
+</script>
+
+</html>

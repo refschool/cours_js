@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exo 15</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    let liste = [65, 14, 22, 1, 10, 9, 18, 71, 56]
+
+
+    function get_max(liste) {
+        let max = liste[0] // il est important de désigner un max dès le départ pour commencer l'algorithme
+        for (let i = 0; i < liste.length; i = i + 1) {
+            if (max < liste[i]) {
+                max = liste[i]
+            }
+        }
+
+        return max
+
+    }
+
+    let maximum = get_max(liste)
+    console.log("la plus élément est " + maximum)
+
+</script>
+
+</html>

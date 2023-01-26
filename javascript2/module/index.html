@@ -19,7 +19,7 @@
 
     module.exports = 'Hello Geek';
     //fonctionne toujours en mode strict
-
+//https://fr.javascript.info/modules-intro
 </pre>
 
     <pre data-enlighter-language="html">
@@ -33,6 +33,12 @@ dans hello.js on ne peut utiliser une variable globale de user.js.
     <pre>
     Pour être accessible au monde extérieur, le module doit exporter ce qu'ils veulent être accessible de l'extérieur, et importer ce dont ils ont besoin.
     hello.js doit importer, et user.js doit exporter.
+dans hello.js, :
+import {user} from './user.js';
+
+dans user.js,:
+export let user = "John";
+
 
 </pre>
 </body>

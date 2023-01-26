@@ -26,6 +26,11 @@
 
     master.merge(develop).tag("v1.0.0");
 
+    const aFeature2 = gitgraph.branch("developgit st");
+    aFeature2
+        .commit("integration of React-auth")
+        .commit({ subject: "Add Styling", hash: "0x12fde" })
+        .commit("TestOK");
 
 
 </script>

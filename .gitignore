@@ -1,2 +1,5 @@
 /node_modules/*
 
+/jeux/*
+
+/javascript2/socket/node_modules

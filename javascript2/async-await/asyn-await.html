@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../dist/enlighterjs.min.css" />
+</head>
+
+<body>
+    <h1>Async Await</h1>
+    <!--https://javascript.info/async-await-->
+    The keyword await makes JavaScript wait until that promise settles and returns its result.<br>
+    <pre data-enlighter-language="js">
+// works only inside async functions
+let value = await promise;
+
+//Promise that resolve in 1 second
+async function sleepOneSecond() {
+
+    let promise = new Promise((resolve, reject) => {
+      setTimeout(() => resolve("done!"), 1000)
+    });
+  
+    let result = await promise; // wait until the promise resolves (*)
+  
+    alert(result); // "done!"
+  }
+  
+  sleepOneSecond();
+        </pre>
+
+
+</body>
+<script>
+    //Promise that resolve in 1 second
+    async function sleepOneSecond() {
+        let promise = new Promise((resolve, reject) => {
+            setTimeout(() => resolve("...done!"), 1000)
+        });
+
+        console.log("go..."); // "done!"
+
+        let result = await promise; // wait until the promise resolves (*)
+        console.log(result); // "done!"
+    }
+
+
+    async function test() {
+        await sleepOneSecond();
+        await sleepOneSecond();
+
+    }
+
+    test();
+
+
+
+    fetch(url).then(response => response.json())
+    then(data => data)
+
+    async function test2() {
+        let response = await fetch(url)
+        let data = await response.json()
+    }
+</script>
+<script type="text/javascript" src="../../dist/enlighterjs.min.js"></script>
+<script type="text/javascript">
+    // INIT CODE - simple page-wide initialization based on css selectors
+    // - highlight all pre + code tags (CSS3 selectors)
+    // - use javascript as default language
+    // - use theme "enlighter" as default theme
+    // - replace tabs with 2 spaces
+    EnlighterJS.init('pre', 'code', {
+        language: 'javascript',
+        theme: 'dracula',
+        indent: 2
+    });
+</script>
+
+</html>

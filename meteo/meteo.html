@@ -15,125 +15,30 @@
 </head>
 
 <body>
-    <style>
-        * {
-            font-family: 'Pacifico', cursive;
-        }
 
-        .label {
-            color: #cc0404
-        }
-
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            align-items: stretch;
-            align-content: stretch;
-            border-radius: 15px;
-            margin: 10px;
-            padding: 10px;
-            background-color: white;
-        }
-
-        .item {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 3px;
-            border: solid 1px #aaa;
-            width: 200px;
-        }
-
-        .delete {
-            display: none;
-        }
-    </style>
-
-    <div class="container">
-        <nav class="navbar sticky-top navbar-light bg-light">
-            <a class="navbar-brand" href="#">Apiculture</a>
-        </nav>
-
-        <div class="wrapper">
-            <fieldset id="mainMeteo" class="border p-5">
-                <h2>La météo ici</h2>
-            </fieldset>
-
-            <form action="#">
-                <input type="text" id="inputVille" class="form-group">
-                <input type="submit" id="bntVille" value="Ajouter">
-            </form>
-            <br>
-        </div>
-    </div>
+    <h1>Meteo async await</h1>
 </body>
 <script>
-    $(function () {
-
-        const apikey = 'f1739d80d7f0995ce57277d5861a6566'
-        const ville = 'paris'
-        const deleteImg = 'delete.png'
-
-        $('#bntVille').on('click', function (e) {
-            e.preventDefault()
-            const value = $('#inputVille').val()
-            $('#inputVille').val('')
-            getData(value)
-        })
+    const log = console.log
+    const apikey = 'f1739d80d7f0995ce57277d5861a6566'
+    function buildUrl(ville) {
+        const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + ville + '&appid=' + apikey
+        return url
+    }
 
 
 
-        $('#mainMeteo').mouseover(
-            function (e) {
-                if ($(e.target).hasClass('col')) {
-                    console.log($(e.target).siblings())
-                    $(e.target).siblings().last().children().first().css('display', 'block')
-                }
-            })
+    async function getMeteo() {
+        const url1 = buildUrl('Paris')
+        const url2 = buildUrl('Lyon')
+        let results = await Promise.all([fetch(url1)])
+        //let results = await Promise.all([fetch(url1), fetch(url2)])
+        log(results)
+        //return await Promise.all([fetch(url1), fetch(url2)])
+    }
 
-
-        getData('Paris')
-
-        // Définition des fonctions
-        function getData(city) {
-            const url = buildUrl(city, apikey)
-
-            $.ajax({
-                url: url,
-                method: 'GET',
-            })
-                .done(function (data) {
-                    console.log(data)
-                    //Insertion dans le tableau des données météo
-                    const temperature = Math.round(data.main.temp - 273.15) + '°C'
-                    const humidite = data.main.humidity
-                    const description = data.weather[0].description
-                    const icon = data.weather[0].icon
-                    // icon url
-                    const iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
-
-                    const block = `<div class="row">
-                        <div class="col city">${city}</div>
-                        <div class="col humidite">${humidite} %</div>
-                        <div class="col temperature">${temperature}</div>
-                        <div class="col description">${description}</div>
-                        <div class="col icon"><img src="${iconUrl}" /></div>
-                        <div class="col"><img src="${deleteImg}" width="30" class="delete"/></div>
-                    </div>`
-
-                    // sélection le point d'injection
-                    $('#mainMeteo').append(block)
-                })
-        }
-
-
-        function buildUrl(ville, apikey) {
-            const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + ville + '&appid=' + apikey
-            return url
-        }
-
-    })
+    let results = getMeteo()
+    log(results)
 
 </script>
 

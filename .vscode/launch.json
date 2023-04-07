@@ -18,6 +18,12 @@
                 "<node_internals>/**"
             ],
             "program": "${file}"
+        },
+        {
+            "type": "msedge",
+            "name": "localhost:5000",
+            "request": "launch",
+            "url": "localhost:5000"
         }
     ]
 }

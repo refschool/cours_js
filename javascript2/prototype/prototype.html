@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script src="lodash.js"></script>
+<script>
+    let arr = []
+    const myApp = {
+        appName: "Test prototype",
+        display() {
+            console.log("App : " + this.appName)
+        }
+    }
+
+
+
+    myApp.__proto__ = _;
+    // use lodash concat from myApp
+    arr = myApp.concat(arr, [1, 5, 13, 21])
+    console.log('myApp concat ', arr, myApp)
+
+
+
+
+    const borrower = {
+
+    }
+
+    borrower.chouiner = function () {
+        console.log("Je chouine")
+    }
+
+    //myApp.jechouine()
+    console.log(borrower.jechouine())
+
+
+</script>
+
+</html>

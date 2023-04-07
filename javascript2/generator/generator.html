@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //https://stackoverflow.com/questions/41404182/how-do-i-implement-a-cycle-through-array-with-a-generator-function
+
+    // fonction generator
+    function* gen() {
+        yield "yellow";
+        yield "green";
+        yield "red";
+        yield "blue";
+        yield "cyan";
+    }
+    let colors = gen()
+
+    //console.log(colors.next().value)
+    //console.log(colors.next().value)
+
+
+    function* gen2(iterable) {
+        while (true) {
+            yield* iterable;
+        }
+
+    }
+    let colors2 = gen2(["yellow", "green", "red", "blue", "cyan"])
+
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+    console.log(colors2.next().value)
+
+</script>
+
+</html>

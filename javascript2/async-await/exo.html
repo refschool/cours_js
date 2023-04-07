@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>/*
+function loadJson(url) {
+return fetch(url)
+.then(response => {
+if (response.status == 200) {
+    return response.json();
+} else {
+    throw new Error(response.status);
+}
+});
+}
+
+loadJson('https://javascript.info/no-such-user.json')
+.catch(alert); // Error: 404
+*/
+
+    //https://javascript.info/async-await
+    async function loadJson2(url) {
+
+        try {
+            let response = await fetch(url)
+            if (response.status == 200) {
+                return response.json();
+            } else {
+                throw new Error(response.status);
+            }
+        } catch (err) {
+            // catches errors both in fetch and response.json
+            alert(err);
+        }
+
+    }
+
+    loadJson2('https://javascript.info/no-such-user.json')
+
+</script>
+
+</html>

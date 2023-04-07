@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEER JS</title>
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+</head>
+
+<body>
+    <input type="text" name="localPeerId" id="localPeerId" readonly><br>
+    <input type="text" name="remotePeerId" id="remotePeerId">
+    <button id="btnCall">Call</button>
+    <video id="localVideo"></video>
+    <video id="remoteVideo"></video>
+</body>
+<script>
+    //https://peerjs.com/
+
+    var peer = new Peer();
+    let localStream;
+
+    const localPeerElem = document.getElementById('localPeerId')
+    const remotePeerElem = document.getElementById('remotePeerId')
+    const btnCall = document.getElementById('btnCall')
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            localStream = stream
+            const videoElement = document.getElementById('localVideo')
+            videoElement.srcObject = localStream
+            videoElement.onloadedmetadata = () => videoElement.play()
+        })
+    // on open will be launch when you successfully connect to PeerServer
+    peer.on('open', function (id) {
+        localPeerElem.value = id
+    });
+
+    btnCall.addEventListener('click', function () {
+        const remotePeerId = remotePeerElem.value
+        const call = peer.call(remotePeerId, localStream)
+        call.on('stream', stream => {
+            const remoteVideo = document.getElementById("remoteVideo")
+            remoteVideo.srcObject = stream
+            remoteVideo.onloadedmetadata = () => remoteVideo.play()
+        })
+    })
+
+
+    peer.on('call', call => {
+        call.answer(localStream)
+        call.on('stream', stream => {
+            const remoteVideo = document.getElementById("remoteVideo")
+            remoteVideo.srcObject = stream
+            remoteVideo.onloadedmetadata = () => remoteVideo.play()
+        })
+    })
+
+</script>
+
+</html>

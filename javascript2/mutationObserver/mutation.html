@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mutation Observer</title>
+</head>
+
+<body>
+    <div id="test" contenteditable='true'>
+        xx
+    </div>
+
+</body>
+<script>
+    const targetNode = document.getElementById('test');
+    // Options for the observer (which mutations to observe)
+    // complete list : https://dom.spec.whatwg.org/#dictdef-mutationobserverinit
+    const config = {
+        attributes: true,
+        childList: true,
+        subtree: false, //watch for mutation of inner element if true
+        characterData: true
+    };
+
+    // Callback function to execute when mutations are observed
+    const callback = (mutationList, observer) => {
+        for (const mutation of mutationList) {
+            if (mutation.type === 'childList') {
+                console.log('A child node has been added or removed.');
+                console.log(mutation)
+            } else if (mutation.type === 'attributes') {
+                console.log(mutation)
+
+                console.log(`The ${mutation.attributeName} attribute was modified.`);
+            } else if (mutation.type === 'CharacterData') {
+                console.log('CharacterData', mutation)
+            }
+        }
+    };
+    // Create an observer instance linked to the callback function
+    const observer = new MutationObserver(callback);
+
+    // Start observing the target node for configured mutations
+    observer.observe(targetNode, config);
+    let mutationRecords = observer.takeRecords();
+
+// Later, you can stop observing
+//observer.disconnect();
+</script>
+
+</html>

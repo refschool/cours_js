@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .blue {
+        background-color: blue;
+    }
+
+    .fuchsia {
+        background-color: fuchsia;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    #container {
+        width: 600px;
+        height: 700px;
+        border: black 1px dashed;
+    }
+
+    .tile {
+        position: absolute;
+        height: 75px;
+        width: 50px;
+        border-radius: 5px;
+        border: solid black 1px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .tile:active {
+        background-color: aqua;
+    }
+</style>
+
+<body>
+    <div id="container">
+
+        <div id="tile1" class="tile fuchsia x4 y2">1</div>
+        <div id="tile2" class="tile fuchsia x6 y1">2</div>
+        <div id="tile3" class="tile fuchsia x8 y1">3</div>
+        <div id="tile4" class="tile fuchsia x4 y4">4</div>
+        <div id="tile5" class="tile fuchsia x6 y5">5</div>
+
+    </div>
+
+
+    </div>
+
+
+    </div>
+</body>
+<script>
+    let tile1 = { x: 4, y: 2, z: 1 }
+    let tile2 = { x: 6, y: 1, z: 1 }
+    let tile3 = { x: 8, y: 1, z: 1 }
+    let tile4 = { x: 4, y: 4, z: 1 }
+    let tile5 = { x: 6, y: 5, z: 1 }
+
+    let first = null;
+    let second = null;
+
+    let container = document.querySelector('#container')
+    container.addEventListener('click', function (e) {
+        let tile = e.target
+        if (first == null) {
+            first = tile
+            console.log('first', first)
+            console.log('second', second)
+
+        }
+        else if (first != null && second == null) {
+            second = tile
+            console.log('first', first)
+            console.log('second', second)
+            console.log('annihilation tile')
+            first = second = null
+
+            console.log('first', first)
+            console.log('second', second)
+        }
+
+
+    })
+</script>
+
+</html>

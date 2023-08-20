@@ -19,10 +19,15 @@
     </form>
 </body>
 <script>
-
+    let citySelected = false
+    // Event delegation
     const form = document.getElementById('formulaire')
     form.addEventListener('click', function (e) {
-        console.log(e.target.value)
+        // si type  == radio on sette citySelected à true
+        if (e.target.type == "radio") {
+            console.log("radio touchée")
+            citySelected = true
+        }
     })
 </script>
 

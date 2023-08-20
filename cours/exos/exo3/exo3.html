@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devises</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+    // function add(a, b) {
+    //     result = a + b
+    //     return result
+    // }
+
+    // debugger
+    // console.log(add(3,8)) // pointeur vers la fonction add
+
+
+    let entree = prompt("Entrez une valeur")
+
+    //"EURO" "Euro" "euro" " EURO"  "euro " " euro "
+    //const entree = "EURO"
+    //entree.toLowerCase()
+    // toLowerCase ne modifie pas la variable d'origine
+    //let toto = entree.toLowerCase()
+
+
+    entree = entree.toLowerCase().trim() //chainage
+
+    //entree = entree.toLowerCase()
+
+    // console.log(entree.toLowerCase()) === console.log(toto)
+    //console.log(toto)
+    //entree = entree.trim() // nettoie les espace à gauche et à droite
+
+
+
+    if (entree == 'euro') {
+        console.log(`1-vous avez entré euro`)
+    } else {
+        console.log(`2-Je n'ai pas "reconnu" votre devise`)
+    }
+</script>
+
+</html>

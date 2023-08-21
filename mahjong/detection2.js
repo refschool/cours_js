@@ -1,15 +1,6 @@
 /*
 //config verte
-let tile101 = { "data": { x: 2, y: 1, z: 0 }, tile_id: "tile101" }
-let tile102 = { x: 4, y: 1, z: 0 }
-let tile103 = { x: 3, y: 3, z: 0 }
-let tile104 = { x: 5, y: 3, z: 0 }
-let tile105 = { x: 7, y: 3, z: 0 }
-let tile106 = { x: 3, y: 5, z: 0 }
-let tile107 = { x: 5, y: 5, z: 0 }
-let tile108 = { x: 7, y: 5, z: 0 }
-let tile109 = { x: 3, y: 7, z: 0 }
-let tile110 = { x: 5, y: 7, z: 0 }
+
 
 //algo detection colision
 let matrix0 = []
@@ -19,6 +10,7 @@ matrix1.push(tile1, tile2, tile3, tile4, tile5)
 let matrixArray = [matrix0, matrix1]
 */
 function hasLeft(tile, matrix) {
+
     let found = false;
     matrix.every(element => {
         if (element.data.x == tile.data.x - 2) {
@@ -52,8 +44,8 @@ function hasTopCenter(tile, matrix) {
     // TODO : check niveau de matrix > niveau de tile
     let found = false;
     matrix.every(element => {
-        if (element.x == tile.x) {
-            if ([element.y + 1, element.y, element.y - 1].includes(tile.y))
+        if (element.data.x == tile.data.x) {
+            if ([element.data.y + 1, element.data.y, element.data.y - 1].includes(tile.data.y))
                 found = true;
             return false;
         }
@@ -66,8 +58,8 @@ function hasTopCenter(tile, matrix) {
 function hasTopLeft(tile, matrix) {
     let found = false;
     matrix.every(element => {
-        if (element.x == tile.x - 1) {
-            if ([element.y + 1, element.y, element.y - 1].includes(tile.y)) {
+        if (element.data.x == tile.x - 1) {
+            if ([element.data.y + 1, element.data.y, element.data.y - 1].includes(tile.data.y)) {
                 found = true
                 return false // equivalent break
             }
@@ -81,7 +73,7 @@ function hasTopRight(tile, matrix) {
     let found = false;
     matrix.every(element => {
         if (element.x == tile.x + 1) {
-            if ([element.y + 1, element.y, element.y - 1].includes(tile.y)) {
+            if ([element.data.y + 1, element.data.y, element.data.y - 1].includes(tile.data.y)) {
                 found = true
                 return false // equivalent break
             }
@@ -110,10 +102,17 @@ function isFreeAbove(tile, matrix) {
     }
     return true
 }
-
+// test if the tile is clearable
 function isClearable(tile, matrixArray) {
     // TODO: if (tile.z == 0)  => matrixArray[1]
-    return isFree(tile, matrixArray[0]) && isFreeAbove(tile, matrixArray[1])
+    let tileIsFree = isFree(tile, matrixArray[tile.data.z])
+    let tileIsFreeAbove = null
+    if (matrixArray[tile.data.z + 1] !== undefined) {
+        tileIsFreeAbove = isFreeAbove(tile, matrixArray[tile.data.z + 1])
+    } else {
+        tileIsFreeAbove = true
+    }
+    return tileIsFree && tileIsFreeAbove
 }
 
 // oublié de faire hasTop et hasBottom

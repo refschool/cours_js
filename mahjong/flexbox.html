@@ -94,20 +94,31 @@
         }
         else if (first != null && second == null) {
             second = id // TODO : must be different from first
-            // find the tile with the corresponding id
-            let firstTile = matrix1.find((t) => t.id == first)
-            // test the freedom of first
-            let secondTile = matrix1.find((t) => t.id == second)
-            if (isFree(firstTile, matrix1) && isFree(secondTile, matrix1)) {
-                console.log("Can remove ", first, ' and ', second)
+            if (second !== first) {
+                // find the tile with the corresponding id
+                let firstTile = matrix1.find((t) => t.id == first)
+                // test the freedom of first
+                let secondTile = matrix1.find((t) => t.id == second)
+                if (isFree(firstTile, matrix1) && isFree(secondTile, matrix1)) {
+                    console.log("Can remove ", first, ' and ', second)
+                    //remove first and second
+                    document.getElementById(first).remove()
+                    document.getElementById(second).remove()
+                    //also remove from the array matrix
+                    matrix1 = matrix1.filter(elem => {
+                        return elem.id !== first && elem.id !== second
+                    })
+                }
+
             } else {
                 console.log("cannot remove neither tile ")
             }
 
 
 
-            //('annihilation tile') ALSO same tile selection bring here
+            console.log('annihilation tile')
             first = second = null
+
 
         }
     })

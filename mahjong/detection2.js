@@ -72,7 +72,7 @@ function hasTopLeft(tile, matrix) {
 function hasTopRight(tile, matrix) {
     let found = false;
     matrix.every(element => {
-        if (element.x == tile.x + 1) {
+        if (element.data.x == tile.data.x + 1) {
             if ([element.data.y + 1, element.data.y, element.data.y - 1].includes(tile.data.y)) {
                 found = true
                 return false // equivalent break

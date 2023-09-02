@@ -90,7 +90,7 @@
     let tile2 = { "data": { x: 6, y: 1, z: 1 }, id: "tile2" }
     let tile3 = { "data": { x: 8, y: 1, z: 1 }, id: "tile3" }
     let tile4 = { "data": { x: 4, y: 4, z: 1 }, id: "tile4" }
-    let tile5 = { "data": { x: 6, y: 5, z: 1 }, id: "tile5" }
+    let tile5 = { "data": { x: 7, y: 5, z: 1 }, id: "tile5" }
     //config verte
     let tile101 = { "data": { x: 2, y: 1, z: 0 }, id: "tile101" }
     let tile102 = { "data": { x: 4, y: 1, z: 0 }, id: "tile102" }
@@ -123,7 +123,7 @@
         if (first == null) {
             first = id
             firstTile = matrixArray[layer].find((t) => t.id == first)
-            console.log('toto', firstTile)
+            console.log('first tile ', firstTile)
             //debugger
             if (isClearable(firstTile, matrixArray)) {
                 console.log(first, ' is clearable')
@@ -141,11 +141,12 @@
             if (second !== first) {
                 // test the freedom of first
                 let secondTile = matrixArray[layer].find((t) => t.id == second)
+                console.log('second tile ', secondTile)
 
                 if (isClearable(secondTile, matrixArray)) {
                     console.log("Can remove ", first, ' and ', second)
                     //remove first and second in the DOM
-                    debugger
+
                     document.getElementById(first).remove()
                     document.getElementById(second).remove()
                     //also remove from the array matrix
@@ -164,13 +165,8 @@
             } else {
                 console.log("cannot remove neither tile ")
             }
-
-
-
             console.log('annihilation tile')
-
             first = second = null;
-
 
         }
     })

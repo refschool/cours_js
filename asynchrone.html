@@ -1,0 +1,45 @@
+<html>
+
+<body>
+    <div id="MeteoBoard">
+
+    </div>
+    <button id="btn">Envoyer</button>
+</body>
+<script>
+
+    async function getFacebookProfile(callback) {
+        /** */
+        fetch("https://facebook.com/spi/credenttial")
+        callback()
+        return await new Promise()
+    }
+
+
+    async function getWeather(callback) {
+        let meteo;
+        fetch('https://api.openweathermap.org')
+        /**/
+        return await MediaElementAudioSourceNode;
+    }
+
+    async function AfficherMeteo() {
+
+        // async/await
+        let credential = await getFacebookProfile()
+        let meteo = await getWeather()
+
+        let affichage = document.getElementById('#MeteoBoard') // sync
+        affichage.innerHTML = '<p>' + meteo + '</p>'
+
+
+    }
+
+    // programme principal
+    AfficherMeteo()
+
+
+
+</script>
+
+</html>

@@ -50,63 +50,41 @@
         }
     </style>
 
-    <div class="container">
-        <nav class="navbar sticky-top navbar-light bg-light">
-            <a class="navbar-brand" href="#">Apiculture</a>
-        </nav>
-
-        <div class="wrapper">
-            <fieldset id="mainMeteo" class="border p-5">
-                <h2>La météo ici</h2>
-            </fieldset>
-
-            <form action="#">
-                <input type="text" id="inputVille" class="form-group">
-                <input type="submit" id="bntVille" value="Ajouter">
-            </form>
-            <br>
-        </div>
-    </div>
 </body>
 <script>
-
-
+    const log = console.log
     const apikey = 'f1739d80d7f0995ce57277d5861a6566'
-    const ville = 'paris'
-    const deleteImg = 'delete.png'
+    const url = 'https://api.openweathermap.org/data/2.5/weather?q=paris&appid=' + apikey
 
-    let villeButton = document.querySelector('#bntVille')
-    let villeInput = document.querySelector('#inputVille')
+    /**
+     * in an async function to extract a promise you must use await
+    */
+    async function getMeteo() {
+        const response = await fetch(url)
+        const data = await response.json()
 
-
-    villeButton.addEventListener('click', function (e) {
-        e.preventDefault()
-
-        const value = villeInput.value
-        //alert(value)
-        // $('#inputVille').val('')
-        getData(value)
-    })
-
-
-
-    getData('Paris')
-
-    // Définition des fonctions
-    function getData(city) {
-        const url = buildUrl(city, apikey)
-
-
+        return data //effectively return data promise, as if return can wait for data promise, but data.then(data => {console.log(data)}) does not work
+        // const response = await fetch(url)
+        // data.then(data => {console.log(data)})  <<<--  data.then is not a function, because trated as synchronous code !!!
     }
+    /**
+     * THIS DOES NOT WORK
+     * 
+     *  async function getMeteo() {
+            const response = await fetch(url)
+            const data = await response.json()
+            data.then(data => {console.log(data)})
+          
+        }
+     * 
+     * 
+     * 
+     */
+    let parisMeteo = getMeteo()
+    parisMeteo.then(data => { console.log(data) })
 
-
-
-
-    function buildUrl(ville, apikey) {
-        const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + ville + '&appid=' + apikey
-        return url
-    }
-
+    // classic promise syntax
+    //fetch(url).then(response => response.json()).then(data => console.log(data))
 
 </script>
 

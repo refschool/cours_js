@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- <iframe width="800" height="639" src="https://www.youtube.com/embed/ZV8OOcLRax4" title="typescript module format"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe> -->
+
+    <div id="player"></div>
+
+    <div id="remote">
+        <span>Play</span>
+        <span>Pause</span>
+        <span>Stop</span>
+    </div>
+</body>
+<script>
+    //https://stackoverflow.com/questions/53135391/getting-current-time-of-youtube-videos-while-playing
+    //https://developers.google.com/youtube/iframe_api_reference
+    // on ne peut agir que dans les événements Youtube
+    // 2. This code loads the IFrame Player API code asynchronously.
+    var tag = document.createElement('script');
+    let remote = document.querySelector('#remote');
+
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    var player;
+    function onYouTubeIframeAPIReady() {
+        console.log('onYouTubeIframeAPIReady', typeof (YT))
+        player = new YT.Player('player', {
+            height: '390',
+            width: '640',
+            videoId: 'ZV8OOcLRax4',
+            playerVars: {
+                'playsinline': 1
+            },
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        console.log('onPlayerReady')
+        event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+    function onPlayerStateChange(event) {
+        console.log('onPlayerStateChange')
+        console.log('event data', event.data)
+        console.log('event target', event.target)
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 5000);
+            done = true;
+        }
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
+
+    function getCurrentTime() {
+        console.log(player.getCurrentTime())
+    }
+
+
+    remote.addEventListener('click', function (e) {
+        let text = e.target.innerHTML
+        switch (text) {
+            case 'Play':
+                player.PlayVideo();
+                break;
+            case 'Stop':
+                player.stopVideo();
+                break;
+            case 'Pause':
+                player.pauseVideo();
+                break;
+            default:
+                console.log('Rien')
+        }
+
+    })
+
+</script>
+
+</html>

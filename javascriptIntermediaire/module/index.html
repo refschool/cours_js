@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Javascript Module</title>
+    <!-- EnlighterJS Resources !-->
+    <link rel="stylesheet" href="../../dist/enlighterjs.min.css" />
+</head>
+
+<body>
+    <h1>Javascript modules</h1>
+
+
+    <pre>
+
+    module.exports = 'Hello Geek';
+    //fonctionne toujours en mode strict
+//https://fr.javascript.info/modules-intro
+</pre>
+
+    <pre data-enlighter-language="html">
+
+<script type="module" src="user.js"></script>
+<script type="module" src="hello.js"></script>
+Les variable et fonction globale d'un module ne sont pas visibles dans les autres scripts
+dans hello.js on ne peut utiliser une variable globale de user.js.
+</pre>
+
+    <pre>
+    Pour être accessible au monde extérieur, le module doit exporter ce qu'ils veulent être accessible de l'extérieur, et importer ce dont ils ont besoin.
+    hello.js doit importer, et user.js doit exporter.
+dans hello.js, :
+import {user} from './user.js';
+
+dans user.js,:
+export let user = "John";
+
+
+</pre>
+</body>
+<script type="module">
+    import { sayHi } from './lib.js';
+
+
+    let msg = sayHi("Jules")
+    console.log(msg)
+
+
+
+</script>
+<script type="text/javascript" src="../../dist/enlighterjs.min.js"></script>
+<script type="text/javascript">
+    // INIT CODE - simple page-wide initialization based on css selectors
+    // - highlight all pre + code tags (CSS3 selectors)
+    // - use javascript as default language
+    // - use theme "enlighter" as default theme
+    // - replace tabs with 2 spaces
+    EnlighterJS.init('pre', 'code', {
+        language: 'javascript',
+        theme: 'dracula',
+        indent: 2
+    });
+</script>
+
+</html>

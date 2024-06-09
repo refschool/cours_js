@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .bouton {
+            width: 70px;
+            height: 20px;
+            background-color: blue;
+            border: solid 1px black;
+            cursor: pointer;
+        }
+
+        .vignette {
+            width: 100px;
+            height: 100px;
+            background-color:
+                green;
+            border: solid 1px black;
+        }
+    </style>
+
+    <div id="div_1" class="div_1 vignette">1</div>
+    <div id="div_2" class="div_2 vignette">2</div>
+    <div id="div_3" class="div_3 vignette">3</div>
+    <div id="btn_1" class=" bouton">effacer 1</div>
+    <div id="btn_2" class=" bouton">effacer 2</div>
+    <div id="btn_3" class=" bouton">effacer 3</div>
+</body>
+<script>
+    let body = document.querySelector('body')
+    body.addEventListener('click', function (event) {
+        let elem = event.target
+        let id = elem.getAttribute('id')
+        let tab = id.split('_')
+        id = tab[1]
+        let a_effacer = document.querySelector('#div_' + id)
+        a_effacer.remove()
+        elem.remove()
+
+    })
+
+</script>
+
+</html>

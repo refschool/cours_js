@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node vs Element</title>
+</head>
+
+<body>
+    <div class="container">
+        <ul id="liste">
+            <li id="un">Un</li>
+            <li id="deux">Deux</li>
+            <li id="trois">Trois</li>
+        </ul>
+    </div>
+</body>
+<script>
+    var mode = document.designMode;
+    document.designMode = "on";
+
+
+    // create element
+    let el = document.createElement('li')
+    let refNode = document.getElementById("deux")
+    el.innerHTML = "Toto"
+    //
+    let element = document.getElementById("liste")
+    // element.insertBefore(el, refNode)
+    console.log(element instanceof Element)
+    let node = document.querySelector('#liste')
+    node.insertBefore(el, refNode)
+    console.log(node instanceof Node)
+    let nodelist = document.querySelectorAll('#liste')
+    console.log(nodelist[0] instanceof Node)
+
+
+    let liste = document.getElementById('liste')
+    let kids = liste.children
+    console.log(kids)
+</script>
+
+</html>

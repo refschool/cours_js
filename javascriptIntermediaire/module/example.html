@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script type="module">
+    alert("module alert" + typeof button); // ce module est defer, il se télécharge immédiatement, mais il attend que le HTML finisse de se télécharger avant de s'exécuter.
+</script>
+
+
+<script>
+    alert("regular alert " + typeof button); // s'exécute immédiatement
+</script>
+
+<button id="button">Button</button>
+
+</html>

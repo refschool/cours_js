@@ -17,12 +17,31 @@
     let prospecteElem = document.querySelector('#prospect')
 
     async function get() {
-        let response = await fetch('prospect.json')
+        let response = await fetch('result.json')
         let data = await response.json()
         return data
     }
 
-    let prospects = get().then(obj => {
+    let prospects = get().then(data => {
+        data.map((p) => {
+            let parsedDate = new Date(Date.parse(p.dateCreation))
+            if (parsedDate.getFullYear() == 2023) {
+
+                let url = `https://ceres.emploi.gouv.fr/ceres/#candidat/${p.id}`
+                let lien = document.createElement('a')
+                let paragraph = document.createElement('p')
+                lien.setAttribute('href', url)
+                lien.textContent = p.nomNaissance
+                console.log(lien)
+                paragraph.appendChild(lien)
+                prospecteElem.appendChild(paragraph)
+            }
+        })
+    }
+    )
+
+
+    /*.then(obj => {
         let arr = obj.list
         arr.map((p) => {
             let parsedDate = new Date(Date.parse(p.dateCreation))
@@ -40,7 +59,7 @@
 
 
         })
-    })
+    })*/
 
 </script>
 

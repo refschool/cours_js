@@ -1,0 +1,57 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Container */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f5;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Header */
+.header {
+    width: 100%;
+    background-color: #6200ea;
+    padding: 1rem;
+    color: white;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Main */
+.main {
+    width: 100%;
+    max-width: 600px;
+    padding: 1rem;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Title */
+.main h1 {
+    margin-bottom: 1rem;
+    color: #6200ea;
+    border: #6200ea solid 1px;
+}
+
+/* Card */
+.card {
+    background-color: #eeeeee;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.card p {
+    color: #333333;
+}

@@ -2,9 +2,9 @@
 
 
 function simulateClick() {
-    let titre = document.querySelector('h1')
+    let titre = document.querySelector('.header')
 
-    let clickEvent = new MouseEvent('click', {
+    let clickEvent = new MouseEvent('bonjour', {
         bubbles: true,
         cancellable: true,
         /*    offsetX: 20,
@@ -27,9 +27,15 @@ function simulateClick() {
 
 }
 
-let h2 = document.querySelector('h1').addEventListener('click', function (e) {
+
+
+let header = document.querySelector('.header').addEventListener('bonjour', function (e) {
+    alert('titi')
+})
+let h1 = document.querySelector('h1').addEventListener('bonjour', function (e) {
     alert('toto')
 })
+
 
 setTimeout(simulateClick, 300)
 

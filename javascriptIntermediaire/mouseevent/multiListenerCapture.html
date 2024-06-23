@@ -1,0 +1,35 @@
+<body id="body">
+    <div id="test">
+        <h1 id="elem">H1 Hello for John!</h1>
+        <h2 id="elem2">Elem2</h2>
+    </div>
+    <div id="outer">
+        Sibling
+        <h2 id="outer2">Outer 2</h2>
+    </div>
+</body>
+
+<script>
+    // un élément adjacent n'étant pas ancêtre de l'élément responsable de l'émission de l'événement, ne pourra pas écouter cet événement.
+    // pour simuler le fait qu'un événement émis puisse atteindre un élément non ancêtre, il faut utiliser la délégation d'événement.
+    //Par exemple mettre le listener au niveau du body
+</script>
+<script>
+    body.addEventListener("goodbye", function (event) {
+        console.log("body")
+    });
+
+    test.addEventListener('goodbye', function (e) {
+        console.log("test")
+    }) // capture
+
+    elem.addEventListener('goodbye', function (e) {
+        console.log("elem")
+    }, true)
+
+    body.dispatchEvent(new Event("goodbye", {
+        detail: { name: "John" },
+        bubbles: true
+    }));
+
+</script>

@@ -1,0 +1,17 @@
+<h1 id="elem">Hello for John!</h1>
+<h2 id="test">C'est un test</h2>
+<script>
+    // additional details come with the event to the handler
+    elem.addEventListener("hello", function (event) {
+        console.log("elem")
+        alert(event.detail.name);
+    });
+
+    test.addEventListener('hello', function (e) {
+        console.log("test")
+    })
+
+    elem.dispatchEvent(new CustomEvent("hello", {
+        detail: { name: "John" }
+    }));
+</script>

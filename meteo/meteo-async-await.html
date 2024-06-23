@@ -62,7 +62,16 @@
     async function getMeteo() {
         const response = await fetch(url)
         const data = await response.json()
+        console.log('getMeteo ', data)
+        return data //effectively return data promise, as if return can wait for data promise, but data.then(data => {console.log(data)}) does not work
+        // const response = await fetch(url)
+        // data.then(data => {console.log(data)})  <<<--  data.then is not a function, because trated as synchronous code !!!
+    }
 
+
+    async function getMeteo2() {
+        const data = await fetch(url).then(response => response.json())
+        console.log('getMeteo2 ', data)
         return data //effectively return data promise, as if return can wait for data promise, but data.then(data => {console.log(data)}) does not work
         // const response = await fetch(url)
         // data.then(data => {console.log(data)})  <<<--  data.then is not a function, because trated as synchronous code !!!
@@ -81,7 +90,9 @@
      * 
      */
     let parisMeteo = getMeteo()
-    parisMeteo.then(data => { console.log(data) })
+    let parisMeteo2 = getMeteo2()
+    //console.log(parisMeteo)
+    //  parisMeteo.then(data => { console.log(data) })
 
     // classic promise syntax
     //fetch(url).then(response => response.json()).then(data => console.log(data))

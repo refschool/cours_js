@@ -8,15 +8,13 @@ let btn = document.getElementById('btn')
 const detail = "From CustomEvent";  // literally anything can go here
 const e = new Event('my_event'); e.detail = "From Event"
 // CustomEvent hérite de Event
+//avec CustomEvent le dispatcher n'est pas le listener
 const ce = new CustomEvent('something_done', { detail });
-
 
 setTimeout(() => {
     this.dispatchEvent(ce);
     this.dispatchEvent(e);
 }, 1000);
-
-
 
 this.addEventListener('something_done', (e) => {
     console.info(e.detail);
@@ -28,13 +26,13 @@ this.addEventListener('my_event', (e) => {
 
 // EventTarget, tout arbitrairement devient écouteur d'événement
 // bizarrement l'émetteur est aussi le listener
-const target = new EventTarget();
-const targetEvent = new Event('target_listener')
-target.addEventListener('target_listener', (e) => {
-    console.log('event target')
-});
+// const target = new EventTarget();
+// const targetEvent = new Event('target_listener')
+// target.addEventListener('target_listener', (e) => {
+//     console.log('event target')
+// });
 
 
-setTimeout(() => {
-    target.dispatchEvent(targetEvent);
-}, 1500);
+// setTimeout(() => {
+//     target.dispatchEvent(targetEvent);
+// }, 1500);

@@ -1,11 +1,12 @@
 // destructuration sert à piocher à dans un json plus facilement (apparu en 2015  Ecmascript 6)
 let obj = { nom: "huynh", age: 48 }
-//sans destructuration
-//let age = obj['age']
+// //sans destructuration
+// let age = obj.age
+// let nom = obj.nom
 //console.log(age)
 
 //avec destructuration
-//let { prenom } = obj
+let { age,nom } = obj
 
 function test({ nom, age }) {
     console.log(nom, age)

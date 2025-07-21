@@ -17,6 +17,14 @@
             font-family: 'Courier New', Courier, monospace;
             background-color: grey;
         }
+
+        .redlabel {
+            border-radius: 6px;
+            padding: 3px;
+            border: 1px black solid;
+            background-color: red;
+            color: white;
+        }
     </style>
 
 
@@ -117,15 +125,18 @@ show();
     
 </pre>
 
-        <strong>When you call a method without specifying its object, JavaScript sets this to the global object in
+        <strong>When you call a method <span class="redlabel">without
+                specifying its
+                object</span>,
+            JavaScript sets this to the global object in
             non-strict mode and undefined in the strict mode.
         </strong>
         To fix this issue, you use the bind() method of the Function.prototype object. The bind() method creates a new
         function whose the this keyword is set to a specified value.
-        <pre data-enlighter-language="js">
-            let brand = car.getBrand.bind(car); // set the context for the method
-        console.log(brand()); // Honda
-    </pre>
+        <pre data-enlighter-language=" js">
+                let brand = car.getBrand.bind(car); // set the context for the method
+                console.log(brand()); // Honda
+                </pre>
 
         <h3>Emprunter une méthode à un autre objet</h3>
         <pre>
@@ -146,7 +157,8 @@ show();
 </pre>
 
         <h3>Constructor invocation</h3>
-        When you use the new keyword to create an instance of a <strong>function object</strong>, you use the function
+        When you use the new keyword to create an instance of a <strong>function object</strong>, you use the
+        function
         as a
         constructor.
         <pre data-enlighter-language="js">
@@ -216,7 +228,8 @@ avec apply()  qui prend un array en paramètre
 
 
         <h3>ES6 particularité des fonctions flèches</h3>
-        Les fonction flèche ne créent pas leur propre contexte mais hérite du contexte de la fonction enveloppante
+        Les fonction flèche ne créent pas leur propre contexte mais hérite du contexte de la fonction
+        enveloppante
         <pre data-enlighter-language="js">
     let getThis = () => this;
 console.log(getThis() === window); // true

@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Task A",
+            "type": "shell",
+            "command": "echo Running Task A",
+            "presentation": {
+                "group": "startup-groupA",
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "Task B",
+            "type": "shell",
+            "command": "echo Running Task B",
+            "presentation": {
+                "group": "startup-groupB",
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "Task C (Git Bash)",
+            "type": "shell",
+            "command": "echo Running Task C with Git Bash",
+            "options": {
+                "shell": {
+                    "executable": "C:\\Program Files\\Git\\bin\\bash.exe"
+                }
+            },
+            "presentation": {
+                "group": "startup-groupC",
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            }
+        },
+        {
+            "label": "Startup",
+            "dependsOn": [
+                "Task A",
+                "Task B",
+                "Task C (Git Bash)"
+            ],
+            "dependsOrder": "sequence", // <--- important: runs sequentially, not in parallel
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}

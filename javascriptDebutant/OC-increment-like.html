@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographe.html</title>
+</head>
+
+<body>
+    <style>
+        .like {
+            cursor: pointer;
+        }
+    </style>
+    <div id="page">
+        <div>❤️<span id="like1">1</span></div>
+    </div>
+    <div id="global">❤️ Total<span id="total"> 3</span></div>
+</body>
+<script>
+    //délégation d'événement
+    let page = document.getElementById('like1')
+    page.addEventListener('click', function (e) {
+        let elem = document.querySelector('#total')
+        console.log('target', elem)
+        let nb = elem.textContent
+        nb++// on incremente de 1
+        // on remplace dans le innerHTML
+        elem.innerHTML = nb
+        // on incrémente le total
+
+    })
+
+    // 
+</script>
+
+</html>

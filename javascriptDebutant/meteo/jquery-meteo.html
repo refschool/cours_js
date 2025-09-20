@@ -1,0 +1,138 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vanilla JS Meteo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+        integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <style>
+        * {
+            font-family: 'Pacifico', cursive;
+        }
+
+        .label {
+            color: #cc0404
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: stretch;
+            border-radius: 15px;
+            margin: 10px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        .item {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            border: solid 1px #aaa;
+            width: 200px;
+        }
+
+        .delete {
+            display: none;
+        }
+    </style>
+
+    <div class="container">
+        <nav class="navbar sticky-top navbar-light bg-light">
+            <a class="navbar-brand" href="#">Apiculture</a>
+        </nav>
+
+        <div class="wrapper">
+            <fieldset id="mainMeteo" class="border p-5">
+                <h2>La météo ici</h2>
+            </fieldset>
+
+            <form action="#">
+                <input type="text" id="inputVille" class="form-group">
+                <input type="submit" id="bntVille" value="Ajouter">
+            </form>
+            <br>
+        </div>
+    </div>
+</body>
+<script>
+
+
+    const apikey = 'f1739d80d7f0995ce57277d5861a6566'
+    const ville = 'paris'
+    const deleteImg = 'delete.png'
+
+    let villeButton = document.querySelector('#bntVille')
+    let villeInput = document.querySelector('#inputVille')
+
+
+    villeButton.addEventListener('click', function (e) {
+        e.preventDefault()
+
+        const value = villeInput.value
+        //alert(value)
+        // $('#inputVille').val('')
+        getData(value)
+    })
+
+
+
+    getData('Paris')
+
+    // Définition des fonctions
+    function getData(city) {
+        const url = buildUrl(city, apikey)
+
+        $.ajax({
+            url: url,
+            method: 'GET',
+        })
+            .done(function (data) {
+                console.log(data)
+                //Insertion dans le tableau des données météo
+                const temperature = Math.round(data.main.temp - 273.15) + '°C'
+                const humidite = data.main.humidity
+                const description = data.weather[0].description
+                const icon = data.weather[0].icon
+                // icon url
+                const iconUrl = "http://openweathermap.org/img/w/" + icon + ".png";
+
+                const block = `<div class="row">
+                        <div class="col city">${city}</div>
+                        <div class="col humidite">${humidite} %</div>
+                        <div class="col temperature">${temperature}</div>
+                        <div class="col description">${description}</div>
+                        <div class="col icon"><img src="${iconUrl}" /></div>
+                        <div class="col"><img src="${deleteImg}" width="30" class="delete"/></div>
+                    </div>`
+
+                // sélection le point d'injection
+                $('#mainMeteo').append(block)
+            })
+    }
+
+
+
+
+    function buildUrl(ville, apikey) {
+        const url = 'https://api.openweathermap.org/data/2.5/weather?q=' + ville + '&appid=' + apikey
+        return url
+    }
+
+
+</script>
+
+</html>

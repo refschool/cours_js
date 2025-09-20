@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        .btn {
+            border: solid 1px black;
+            width: 150px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .toto {
+            padding: 15px;
+            border: solid 1px red;
+        }
+    </style>
+    <div class="toto">
+
+        <div class="btn">Click me</div>
+    </div>
+</body>
+<script>
+    const btn = document.querySelector('.btn')
+    btn.addEventListener('click', function (event) {
+        event.stopImmediatePropagation()
+        //const t = event.target
+        console.log('btn clicqué')
+    })
+
+
+    const toto = document.querySelector('.toto')
+    toto.addEventListener('click', function (event) {
+        console.log('toto cliqué')
+    })
+</script>
+
+</html>

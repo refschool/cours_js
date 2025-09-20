@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requête AJAX</title>
+</head>
+
+<body>
+    <div>
+        <p id="temperature"></p>
+    </div>
+</body>
+<script>
+    let donnees = ''
+    let apikey = 'f1739d80d7f0995ce57277d5861a6566'
+    const city = 'Londres'
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apikey}`
+
+    fetch(url).then(response => response.json())
+        .then(data => {
+            donnees = data
+            let temperature = parseFloat(data.main.temp) - 273  // on convertit en nom decimal et on convertit en témpérature Celsius
+            // le webservice nous retourne de degré Kelvin
+            // on arrondit à une décimale
+            temperature = temperature.toFixed(1)
+            // on injecte le texte dans l'élément p avec l'id temperature
+            let elem_temperature = document.getElementById('temperature')
+            elem_temperature.innerHTML = `La température à ${city} est de ${temperature} °C`
+            console.log(donnees) // on affiche les données ici ça marche
+        })
+
+
+
+    console.log(donnees) // pourquoi ici on n'obtient rien ?
+</script>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meteo Openweathermap</title>
+</head>
+
+<body>
+    La température est de <span id="temperature"></span>
+</body>
+<script>
+    const apikey = 'f1739d80d7f0995ce57277d5861a6566'
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=toulouse&appid=${apikey}`
+    // Application programming interface
+
+    // requête AJAX natif == requête réseau vers un site externe
+    // l'AJAX est ASYNCHRONE avec une promesse (les 2 autres méthodes sont avec l'objet xhr et async/await)
+
+
+    fetch(url)
+        .then(responseBrute => responseBrute.json())
+        .then(dataJson => {
+            let temperatureElement = document.getElementById('temperature')
+            console.log(dataJson)
+            //console.log("Dans fetch", dataJson.main.temp - 273)
+
+            temperatureElement.innerHTML = dataJson.main.temp - 273
+        })
+
+    // code SYNCHRONE EST PRIORITAIRE
+    console.log("après fetch 1")
+    console.log("après fetch 2")
+
+
+</script>
+
+</html>

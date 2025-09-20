@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .green {
+        background-color: green;
+    }
+
+    .blue {
+        background-color: blue;
+    }
+
+    .fuchsia {
+        background-color: fuchsia;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    #container {
+        width: 600px;
+        height: 700px;
+        border: black 1px dashed;
+    }
+
+    .tile {
+        position: absolute;
+        height: 75px;
+        width: 50px;
+        border-radius: 5px;
+        border: solid black 1px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .tile:active {
+        background-color: aqua;
+    }
+</style>
+
+<body>
+    <div id="container">
+
+        <div id="matrix-0">
+            <div id="tile101" class="tile green x2 y1">101</div>
+            <div id="tile102" class="tile green x4 y1">102</div>
+            <div id="tile103" class="tile green x3 y3">103</div>
+            <div id="tile104" class="tile green x5 y3">104</div>
+            <div id="tile105" class="tile green x7 y3">105</div>
+            <div id="tile106" class="tile green x3 y5">106</div>
+            <div id="tile107" class="tile green x5 y5">107</div>
+            <div id="tile108" class="tile green x7 y5">108</div>
+            <div id="tile109" class="tile green x3 y7">109</div>
+            <div id="tile110" class="tile green x5 y7">110</div>
+        </div>
+        <div id="matrix-1">
+            <div id="tile1" class="tile fuchsia x4 y2">1</div>
+            <div id="tile2" class="tile fuchsia x6 y1">2</div>
+            <div id="tile3" class="tile fuchsia x8 y1">3</div>
+            <div id="tile4" class="tile fuchsia x4 y4">4</div>
+            <div id="tile5" class="tile fuchsia x6 y5">5</div>
+        </div>
+    </div>
+
+
+    </div>
+
+
+    </div>
+</body>
+<script src="detection2.js"></script>
+<script>
+    //config rose
+    let tile1 = { "data": { x: 4, y: 2, z: 1 }, id: "tile1" }
+    let tile2 = { "data": { x: 6, y: 1, z: 1 }, id: "tile2" }
+    let tile3 = { "data": { x: 8, y: 1, z: 1 }, id: "tile3" }
+    let tile4 = { "data": { x: 4, y: 4, z: 1 }, id: "tile4" }
+    let tile5 = { "data": { x: 7, y: 5, z: 1 }, id: "tile5" }
+    //config verte
+    let tile101 = { "data": { x: 2, y: 1, z: 0 }, id: "tile101" }
+    let tile102 = { "data": { x: 4, y: 1, z: 0 }, id: "tile102" }
+    let tile103 = { "data": { x: 3, y: 3, z: 0 }, id: "tile103" }
+    let tile104 = { "data": { x: 5, y: 3, z: 0 }, id: "tile104" }
+    let tile105 = { "data": { x: 7, y: 3, z: 0 }, id: "tile105" }
+    let tile106 = { "data": { x: 3, y: 5, z: 0 }, id: "tile106" }
+    let tile107 = { "data": { x: 5, y: 5, z: 0 }, id: "tile107" }
+    let tile108 = { "data": { x: 7, y: 5, z: 0 }, id: "tile108" }
+    let tile109 = { "data": { x: 3, y: 7, z: 0 }, id: "tile109" }
+    let tile110 = { "data": { x: 5, y: 7, z: 0 }, id: "tile110" }
+
+
+    let matrix0 = [tile101, tile102, tile103, tile104, tile105, tile106, tile107, tile108, tile109, tile110]
+    let matrix1 = [tile1, tile2, tile3, tile4, tile5]
+    let matrixArray = [matrix0, matrix1]
+    let first = null;
+    let second = null;
+    let firstTile = null;
+    let secondTile = null;
+    let container = document.querySelector('#container')
+
+    container.addEventListener('click', function (e) {
+        //debugger
+        let id = e.target.getAttribute('id')
+        let layer = e.target.parentNode.getAttribute('id').split('-')[1]
+        console.log('layer= ', layer)
+
+
+        if (first == null) {
+            first = id
+            firstTile = matrixArray[layer].find((t) => t.id == first)
+            console.log('first tile ', firstTile)
+            //debugger
+            if (isClearable(firstTile, matrixArray)) {
+                console.log(first, ' is clearable')
+            } else {
+                console.log(first, ' is not clearable')
+                first = null;
+                firstTile = null;
+            }
+        }
+        else if (first != null && second == null) {
+            second = id
+            console.log(second)
+
+            // must be different from first
+            if (second !== first) {
+                // test the freedom of first
+                let secondTile = matrixArray[layer].find((t) => t.id == second)
+                console.log('second tile ', secondTile)
+
+                if (isClearable(secondTile, matrixArray)) {
+                    console.log("Can remove ", first, ' and ', second)
+                    //remove first and second in the DOM
+
+                    document.getElementById(first).remove()
+                    document.getElementById(second).remove()
+                    //also remove from the array matrix
+                    matrixArray[firstTile.data.z] = matrixArray[firstTile.data.z].filter(elem => {
+                        return elem.id !== first && elem.id !== second
+                    })
+                    matrixArray[secondTile.data.z] = matrixArray[secondTile.data.z].filter(elem => {
+                        return elem.id !== first && elem.id !== second
+                    })
+
+                    firstTile = null;
+                    secondTile = null;
+                    first = second = null;
+                }
+
+            } else {
+                console.log("cannot remove neither tile ")
+            }
+            console.log('annihilation tile')
+            first = second = null;
+
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #container {
+        height: 150px;
+        border: solid red 1px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+    }
+
+    .tile {
+        height: 100px;
+        width: 75px;
+        border-radius: 5px;
+        background: white;
+        border: solid black 1px;
+    }
+</style>
+
+<body>
+    <div id="container">
+
+    </div>
+</body>
+<script>
+    let container = document.querySelector('#container')
+    function getTile(name, id) {
+        let elem = document.createElement('div')
+        elem.setAttribute('id', `${name}-${id}`)
+        elem.setAttribute('class', `tile`)
+        return elem
+    }
+    let tile1 = getTile("bamboo", 1);
+    tile1.setAttribute('hasleft', 'false')
+    tile1.setAttribute('hasright', 'true')
+    // let tile2 = getTile("bamboo", 2)
+    // let tile3 = getTile("bamboo", 3)
+    // let tile4 = getTile("bamboo", 4)
+    container.appendChild(tile1)
+</script>
+
+</html>

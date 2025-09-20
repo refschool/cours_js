@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carre {
+  width: 150px;
+  height: 150px;
+  border: 2px solid black;
+  box-shadow: 10px 10px 0 black;
+}

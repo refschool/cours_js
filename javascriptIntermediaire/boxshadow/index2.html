@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box shadow</title>
+     <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+      <div class="carre" id="elem">Hello !</div>
+      <div class="carre" id="ombre"></div>
+</body>
+<script>
+let ombre = document.getElementById('ombre')
+let elem = document.getElementById('elem')
+let fps = 60
+let  inc = 0;
+
+    let handle = setInterval(()=> {
+        inc = inc + 0.5;
+        ombre.style.rotate = `${inc}deg`
+        elem.style.rotate = `${inc}deg`
+    },1000/fps)
+
+    </script>
+</html>

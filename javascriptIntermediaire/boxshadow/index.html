@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Box shadow</title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <div class="carre" id="elem">Hello !</div>
+</body>
+<script>
+    let x0 = y0 = 10;
+let rayon = Math.sqrt(x0 * x0 + y0 * y0);
+console.log(rayon)
+let theta0 = 45;
+
+// retourne la tangente à partir du degré
+// tan = y/x
+function getTanFromDegrees(degrees) {
+  return Math.tan((degrees * Math.PI) / 180);
+}
+
+function get_x(tanTheta,rayon){
+    return  Math.sqrt(rayon / (1 + tanTheta * tanTheta))
+}
+
+function get_y(tanTheta,x){
+    return tanTheta * x
+}
+// on inverse l'angle pour l'ombre pour compenser
+function rotate(elem,degrees){
+    elem.style.rotate = `${degrees}deg`
+}
+
+// rotate white
+let theta = 100
+const elem =  document.getElementById('elem')
+rotate(elem,theta)
+
+// rotate shadow
+// add the initial angle to the opposite of theta
+console.log()
+let tanTheta = getTanFromDegrees(theta0 - theta)
+console.log('tanTetha',tanTheta)
+let x = get_x(tanTheta,rayon) 
+let y = get_y(tanTheta,x) 
+console.log('x',x,'y',y)
+let shadowString = `${x}px ${y}px 0 black`
+console.log('shadowString',shadowString)
+elem.style.boxShadow = shadowString
+    </script>
+</html>

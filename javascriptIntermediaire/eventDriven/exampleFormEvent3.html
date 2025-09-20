@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Driven Form</title>
+</head>
+
+<body>
+    <style>
+        #menu {
+            border: rgb(253, 0, 0) 3px solid;
+            width: 50%;
+            height: 10vh;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        #popup {
+            border: black 1px solid;
+            width: 90%;
+            height: 100%;
+            border-radius: 5px;
+            margin: 10px;
+        }
+    </style>
+
+    <div id="menu">
+        <div id="popup">
+            <h1>Form filled !</h1>
+        </div>
+    </div>
+</body>
+<script>
+    let email = document.querySelector('#email')
+    let name = document.querySelector('#name')
+    let formulaire = document.querySelector('#formulaire')
+    let popup = document.querySelector('#popup')
+    let menu = document.querySelector('#menu')
+
+    //create the CustomEvent
+    const formEvent = new CustomEvent('formEvent', { detail: "blue", bubbles: true })
+
+    menu.addEventListener('click', (e) => {
+        console.log("in menu")
+    })
+
+    popup.addEventListener('click', (e) => {
+        console.log("in popup")
+        popup.dispatchEvent(formEvent)
+    })
+
+    menu.addEventListener('formEvent', (e) => {
+        console.log("in menu formEvent")
+    })
+
+    popup.addEventListener('formEvent', (e) => {
+        console.log("in popup formEvent")
+    })
+
+</script>
+
+</html>

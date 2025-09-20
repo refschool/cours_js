@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array Iterator</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //  Array Iterator with hasNext
+
+    const createArrayIterator = (array) => {
+        let index = 0;
+
+        return {
+            hasNext: () => index < array.length,
+            next: () => array[index++],
+            current: () => array[index]
+        };
+    };
+
+    // Usage
+    const myArray = ['apple', 'banana', 'cherry', 'date'];
+    const iterator = createArrayIterator(myArray);
+
+    while (iterator.hasNext()) {
+        console.log(iterator.next());
+    }
+
+    console.log("Last item was:", iterator.current());
+
+
+    // Generatro Array Iterator 
+    /*function* arrayIterator(array) {
+        for (let item of array) {
+            yield item;
+        }
+    }
+
+    const myArray = ['apple', 'banana', 'cherry', 'date'];
+    const iterator = arrayIterator(myArray);
+    let currentItem;
+
+    for (let item of iterator) {
+        currentItem = item;
+        console.log(currentItem);
+        // Do something with currentItem
+    }
+
+    console.log("Last item was:", currentItem);*/
+</script>
+
+</html>

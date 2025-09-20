@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modale</title>
+</head>
+<style>
+    #modale {
+        width: 50%;
+        height: 50%;
+        background-color: red;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    #cross {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        border: 1px solid black;
+        padding: 5px;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    #closeBtn {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px;
+        border-radius: 10px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div id="modale">
+            <div id="cross">X</div>
+            je suis la modale
+            <button id="closeBtn">CLOSE MODALE</button>
+        </div>
+    </div>
+</body>
+<script>
+    // let closeBtn = document.getElementById('closeBtn')
+    // let cross = document.getElementById('cross')
+    const modale = document.getElementById('modale')
+
+    document.addEventListener('click', function (e) {
+        // if (e.target.closest('#modale') === null || e.target.id === 'closeBtn' || e.target.id === 'cross') {
+        if (['', 'closeBtn', 'cross'].includes(e.target.id)) {
+            modale.style.display = 'none'
+        }
+    })
+
+    // closeBtn.addEventListener('click', function (e) {
+    //     let modale = document.getElementById('modale')
+    //     modale.style.display = 'none'
+    // })
+
+    // cross.addEventListener('click', function (e) {
+    //     let modale = document.getElementById('modale')
+    //     modale.style.display = 'none'
+    // })
+
+
+</script>
+
+</html>

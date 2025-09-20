@@ -1,0 +1,91 @@
+<html>
+
+<head>
+    <title>Document Object Model : Manipulation de DOM, Traversing de DOM</title>
+</head>
+
+<body>
+    <style>
+        #container .chapitre {
+            background-color: burlywood;
+            border: solid 1px rgb(20, 10, 10);
+            margin: 10px;
+        }
+
+        .modale {
+            border: solid 1px black;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .button {
+            background-color: grey;
+            border-radius: 2px;
+            margin: 5px;
+            padding: 4px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: rgb(233, 19, 19);
+        }
+    </style>
+
+    <div id="container">
+
+        <div class="modale">
+            Je suis une pop up<br>Lorem Ipsum Je suis dans la div repérée par classe "modale"
+        </div>
+
+
+        <div id="contenu" class="topchapitre chapitre">
+            <table class="matable">
+                <tr>
+                    <td>XXX</td>
+                    <td class="temperature">XXX</td>
+                    <td>XXX</td>
+                    <td>XXX</td>
+                </tr>
+                <tr>
+                    <td>XXX</td>
+                    <td class="temperature">ooo</td>
+                    <td>XXX</td>
+                    <td>XXX</td>
+                </tr>
+            </table>
+            1-Lorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUM
+            Lorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUMLorem IPSUM
+        </div>
+
+        <div id="btn1" class='button'>
+            CHANGER LA COULEUR ET LE BORD
+        </div>
+        <div id="btn2" class='button'>
+            MONTRER POPUP
+        </div>
+    </div>
+
+
+
+</body>
+<script>
+
+    let madiv = document.querySelector('#contenu')
+    let popup = document.querySelector('.modale')
+    let btn1 = document.getElementById('btn1')
+    let btn2 = document.getElementById('btn2')
+    //effacer un élément via son parent
+    btn1.addEventListener('click', function (e) {
+        madiv.style.backgroundColor = "red"
+        madiv.style.borderWidth = "thick"
+    })
+
+    // POPUP
+    btn2.addEventListener('click', function (e) {
+        popup.style.display = "block"
+
+    })
+
+</script>
+
+</html>

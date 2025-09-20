@@ -1,0 +1,25 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.carre {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 2px solid black;
+}
+#elem {
+    background:white;
+  z-index:100;
+
+}
+#ombre {
+  left:-142px;
+  top:10px;
+  background:black;
+  z-index:10;
+}

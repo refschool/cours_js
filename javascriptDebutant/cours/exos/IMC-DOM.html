@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="panneau">
+        <h2>Votre IMC est : </h2>
+        <p id="imc"></p>
+    </div>
+    <form action="#">
+        <label>Poids</label>
+        <input type="text" id="poids" value=""><br>
+        <label>Taille</label>
+        <input type="text" id="taille" value=""><br>
+        <input type="submit" id="btn" value="Calculer IMC">
+    </form>
+</body>
+<script>
+    const button = document.getElementById('btn')
+    let poids = document.getElementById('poids')
+    let taille = document.getElementById('taille')
+
+    button.addEventListener('click', function (e) {
+        poids = parseFloat(poids.value)
+        taille = parseFloat(taille.value)
+        let imc = (poids / (taille * taille)).toFixed(2)
+        alert('IMC = ' + imc) // ouais c'est magique le transtypage
+        e.preventDefault()
+    })
+
+
+</script>
+
+</html>

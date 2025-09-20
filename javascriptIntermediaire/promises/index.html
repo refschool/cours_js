@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise object</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    //https://www.naukri.com/code360/library/difference-between-promise-and-async-await
+
+    const ninjaPromise = new Promise((resolve, reject) => {
+        debugger
+        // Do some asynchronous operation
+        if (true) {/* operation is successful */
+            resolve('Here comes the success!');
+        }
+        else {
+            reject('Oops we have an Error!');
+        }
+    });
+
+    ninjaPromise.then(result => { // then(callback)  if success
+        console.log(result);  // Output: Here comes the success!
+    }).catch(error => { // callback if failure
+        console.error(error);  // Output: Oops we have an Error!
+    });
+
+
+    // async await
+    const fetchData = async () => {
+        try {
+            const response = await fetch('https://api.ninjaimages.com/data');
+            const data = await response.json();
+            return data;  // Output: returns the fetched data
+        }
+        catch (error) {
+            console.log(error);  // Output: returns the error message
+        }
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille de loto</title>
+</head>
+<style>
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: stretch;
+        align-content: stretch;
+        width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 3px black;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .ecran {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: stretch;
+        width: 420px;
+        height: 90px;
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 3px black;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .numero {
+        color: #DE2528;
+        box-sizing: border-box;
+        border: 3px solid #DE2528;
+        border-radius: 30px;
+        width: 60px;
+        height: 60px;
+        margin: 5px;
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        align-content: stretch;
+        cursor: pointer;
+
+    }
+
+    .bouton {
+        width: 420px;
+        margin-left: auto;
+        margin-right: auto;
+        border: solid 3px black;
+        border-radius: 10px;
+        padding: 10px;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="ecran"></div>
+    <div class="container">
+    </div>
+    <div class="bouton">Envoyer la combinaison</div>
+</body>
+<!-- <script src="init.js"></script> -->
+<script>
+    // url du webservice
+    const url = 'http://glottr.com/index.php?action=loto';
+
+    // pouvoir composer une combinaison de numéro
+
+    // envoyer au centre le numéro via POST email + combinaison
+    bouton.addEventListener('click', function (e) {
+        //envoit via fetch
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                combinaison: combinaison,
+                email: 'yvon.huynh@gmail.com'
+            }),
+        })
+
+    })
+
+
+    // la requêtes ajax vers l'url https://glottr.com/index.php?action=loto  contient un payload {
+    combinaison: combinaison,
+        email: 'yvon.huynh@gmail.com'
+            }
+    // une messgae d'alerte est levé quand la combinaison ne contient pas 6 numeros exactement
+    // l'écran est remis à zéro quand le numéro est envoyé avec succès
+    // le code contient des commentaires suffisamment
+    // la délégation d'événement est utilisé pour entrer les nombres
+    // quand on clique 2 fois sur le même numéro il ne rentre pas 2 fois dans l'écran
+    // on peut osumettre au maximum 5 combianaison
+    // quand on clique sur le parent de l'élément avec la classe 'numero', il ne se passe rien
+    // stocker les combinaisons dans le localstorage
+    // vous pouvez acheter 5 tickets au maximum (empêcher l'envoi au dela de 5 tickets)
+    // évalue la qualité du code sue u échelle de 0 à 1 par incrément de 0.1
+
+    // un tirage sera fait à la fin de la journée pour désigner le numéro gagnant
+
+</script>
+
+</html>

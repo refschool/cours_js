@@ -1,5 +1,7 @@
 /node_modules/*
 /jeux/*
 /javascript2/socket/node_modules
-
+dist
 /csv
+**/node_modules
+this_above_is_the_old_way_to_recursively_exclude

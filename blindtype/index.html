@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blind Typing Trainer</title>
+    <style>
+        body {
+            background: #111;
+            color: #fff;
+            font-family: monospace;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        #text {
+            width: 80%;
+            margin: 20px auto;
+            font-size: 1.2em;
+            line-height: 1.5em;
+        }
+
+        .word {
+            padding: 2px 4px;
+        }
+
+        .correct {
+            color: limegreen;
+        }
+
+        .incorrect {
+            color: red;
+        }
+
+        input {
+            margin-top: 20px;
+            font-size: 1.2em;
+            padding: 10px;
+            width: 60%;
+        }
+
+        #stats {
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>🧠 Blind Typing Trainer</h1>
+    <div id="text"></div>
+    <input type="text" id="input" autofocus placeholder="Commence à taper ici..." />
+    <div id="stats">
+        <p>Mots par minute : <span id="wpm">0</span></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

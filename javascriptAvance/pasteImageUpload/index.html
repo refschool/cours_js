@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coller et envoyer une image</title>
+</head>
+
+<body>
+    <h3>Colle une image ici (Ctrl + V)</h3>
+
+    <div id="editor" contenteditable="false"
+        style="width:400px;height:150px;border:1px solid #aaa;padding:10px;overflow:auto;">
+    </div>
+
+    <div id="preview" style="margin-top:10px;"></div>
+
+    <button id="send">Envoyer</button>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const sendBtn = document.getElementById('send');
+        let pastedImageFile = null; // on garde le fichier ici
+
+        editor.addEventListener('paste', (e) => {
+            const items = e.clipboardData.items;
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    pastedImageFile = file;
+
+                    // Prévisualisation
+                    const img = document.createElement('img');
+                    img.src = URL.createObjectURL(file);
+                    img.style.maxWidth = '200px';
+                    img.style.display = 'block';
+                    preview.innerHTML = ''; // efface l’ancien aperçu
+                    preview.appendChild(img);
+                }
+            }
+        });
+
+        sendBtn.addEventListener('click', async () => {
+            if (!pastedImageFile) {
+                alert('Aucune image à envoyer.');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', pastedImageFile);
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Erreur serveur');
+                const data = await response.json();
+
+                alert('Image envoyée avec succès ! URL : ' + data.url);
+            } catch (err) {
+                console.error(err);
+                alert('Erreur lors de l’envoi.');
+            }
+        });
+    </script>
+</body>
+
+</html>

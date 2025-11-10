@@ -15,61 +15,38 @@
 </head>
 
 <body>
-    <style>
-        * {
-            font-family: 'Pacifico', cursive;
-        }
-
-        .label {
-            color: #cc0404
-        }
-
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            align-items: stretch;
-            align-content: stretch;
-            border-radius: 15px;
-            margin: 10px;
-            padding: 10px;
-            background-color: white;
-        }
-
-        .item {
-            padding: 10px;
-            margin: 5px 0;
-            border-radius: 3px;
-            border: solid 1px #aaa;
-            width: 200px;
-        }
-
-        .delete {
-            display: none;
-        }
-    </style>
-
+    <h1 id="display"></h1>
 </body>
 <script>
+    let display = document.getElementById('display')
     const log = console.log
     const apikey = 'f1739d80d7f0995ce57277d5861a6566'
     const url = 'https://api.openweathermap.org/data/2.5/weather?q=paris&appid=' + apikey
 
+    function getMeteoPromesse(url) {
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                display.innerHTML = data.main.temp
+            })
+    }
+
     /**
      * in an async function to extract a promise you must use await
     */
-    async function getMeteo() {
+    async function getMeteo(url) {
         const response = await fetch(url)
         const data = await response.json()
-        console.log('getMeteo ', data)
+        console.log('getMeteo ', data.main.temp)
+        display.innerHTML = data.main.temp
         return data //effectively return data promise, as if return can wait for data promise, but data.then(data => {console.log(data)}) does not work
         // const response = await fetch(url)
         // data.then(data => {console.log(data)})  <<<--  data.then is not a function, because trated as synchronous code !!!
     }
 
 
-    async function getMeteo2() {
+    async function getMeteo2(url) {
         const data = await fetch(url).then(response => response.json())
         console.log('getMeteo2 ', data)
         return data //effectively return data promise, as if return can wait for data promise, but data.then(data => {console.log(data)}) does not work
@@ -89,13 +66,11 @@
      * 
      * 
      */
-    let parisMeteo = getMeteo()
-    let parisMeteo2 = getMeteo2()
-    //console.log(parisMeteo)
-    //  parisMeteo.then(data => { console.log(data) })
+    //getMeteoPromesse(url)
+    let parisMeteo = getMeteo(url)
+    console.log(parisMeteo)
+    //let parisMeteo2 = getMeteo2(url)
 
-    // classic promise syntax
-    //fetch(url).then(response => response.json()).then(data => console.log(data))
 
 </script>
 

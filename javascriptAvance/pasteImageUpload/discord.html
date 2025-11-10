@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Coller plusieurs images (style Discord)</title>
+</head>
+
+<body>
+    <h3>Colle une ou plusieurs images ici (Ctrl + V)</h3>
+
+    <div id="editor" contenteditable="true"
+        style="width:400px;height:100px;border:1px solid #aaa;padding:10px;overflow:auto;border-radius:6px;">
+    </div>
+
+    <div id="preview" style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;"></div>
+
+    <button id="send" style="margin-top:10px;">Envoyer</button>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const sendBtn = document.getElementById('send');
+
+        // Tableau pour stocker les fichiers collés
+        let pastedImages = [];
+
+        editor.addEventListener('paste', (e) => {
+            const items = e.clipboardData.items;
+            for (const item of items) {
+                if (item.type.startsWith('image/')) {
+                    const file = item.getAsFile();
+                    pastedImages.push(file);
+
+                    const url = URL.createObjectURL(file);
+
+                    // Création du conteneur image + bouton X
+                    const wrapper = document.createElement('div');
+                    wrapper.style.position = 'relative';
+                    wrapper.style.display = 'inline-block';
+
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.style.maxWidth = '150px';
+                    img.style.borderRadius = '6px';
+                    img.style.border = '1px solid #ccc';
+
+                    const closeBtn = document.createElement('button');
+                    closeBtn.textContent = '×';
+                    closeBtn.style.position = 'absolute';
+                    closeBtn.style.top = '-5px';
+                    closeBtn.style.right = '-5px';
+                    closeBtn.style.background = '#f44';
+                    closeBtn.style.color = '#fff';
+                    closeBtn.style.border = 'none';
+                    closeBtn.style.borderRadius = '50%';
+                    closeBtn.style.cursor = 'pointer';
+                    closeBtn.style.width = '20px';
+                    closeBtn.style.height = '20px';
+                    closeBtn.style.fontSize = '14px';
+                    closeBtn.style.lineHeight = '16px';
+                    closeBtn.title = 'Supprimer';
+
+                    // Supprimer cette image
+                    closeBtn.addEventListener('click', () => {
+                        preview.removeChild(wrapper);
+                        pastedImages = pastedImages.filter(f => f !== file);
+                    });
+
+                    wrapper.appendChild(img);
+                    wrapper.appendChild(closeBtn);
+                    preview.appendChild(wrapper);
+                }
+            }
+        });
+
+        sendBtn.addEventListener('click', async () => {
+            if (pastedImages.length === 0) {
+                alert('Aucune image à envoyer.');
+                return;
+            }
+
+            const formData = new FormData();
+            pastedImages.forEach((file, i) => {
+                formData.append('images[]', file);
+            });
+
+            try {
+                const response = await fetch('/upload-multi', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) throw new Error('Erreur serveur');
+                const data = await response.json();
+
+                alert('Images envoyées avec succès !');
+                console.log('Réponse du serveur :', data);
+
+                // Reset
+                pastedImages = [];
+                preview.innerHTML = '';
+                editor.innerHTML = '';
+            } catch (err) {
+                console.error(err);
+                alert('Erreur lors de l’envoi.');
+            }
+        });
+    </script>
+</body>
+
+</html>

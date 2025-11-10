@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .load,
+    .save {
+        width: 100px;
+        border: solid 1px black;
+        padding: 5px;
+        margin: 5px;
+        cursor: pointer
+    }
+</style>
+
+<body>
+    <div class="panel">
+        <input type="text" class="jwt">
+        <div class="save">save</div>
+        <div class="load">load</div>
+    </div>
+
+</body>
+<script src="store.js"></script>
+<script>
+    //reactive store
+    //https://chatgpt.com/share/68fbde42-f1dc-800e-b38a-fca0259eaea6
+    function createPanelController(panel, id) {
+        const input = panel.querySelector('.jwt');
+        const saveBtn = panel.querySelector('.save');
+        const loadBtn = panel.querySelector('.load');
+
+        // Example: load JWT from store
+        store.subscribe(state => {
+            input.value = state.jwtToken || '';
+        });
+
+        // Example: update JWT in store when user changes it
+        input.addEventListener('input', () => {
+            console.log(store.get())
+            store.set({ jwtToken: input.value });
+            console.log(store.get())
+        });
+
+        // Example: load saved requests
+        loadBtn.addEventListener('click', () => {
+            console.log('Loaded requests:', store.get().requests);
+        });
+
+        // Example: add new request
+        saveBtn.addEventListener('click', () => {
+            const current = store.get();
+            store.set({ requests: [...current.requests, { id, date: Date.now() }] });
+        });
+    }
+    let panel = document.querySelector('.panel');
+    let id = Date.now();
+    createPanelController(panel, id);
+
+</script>
+
+</html>

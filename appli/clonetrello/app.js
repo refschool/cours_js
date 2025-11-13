@@ -68,7 +68,11 @@ function setupEventListeners() {
     });
 }
 
-// Firebase Functions
+/**
+ * Sauvegarde ou met à jour une colonne dans Firestore.
+ * Si la colonne possède un ID, elle est mise à jour, sinon elle est créée.
+ * @param {Object} column - L'objet colonne à sauvegarder
+ */
 async function saveColumn(column) {
     if (column.id) {
         await db.collection('columns').doc(column.id).update(column);
@@ -77,6 +81,11 @@ async function saveColumn(column) {
     }
 }
 
+/**
+ * Supprime une colonne et toutes les stories associées.
+ * Utilise un batch pour supprimer toutes les stories en une seule transaction.
+ * @param {string} columnId - L'identifiant de la colonne à supprimer
+ */
 async function deleteColumn(columnId) {
     await db.collection('columns').doc(columnId).delete();
 
@@ -89,6 +98,12 @@ async function deleteColumn(columnId) {
     await batch.commit();
 }
 
+/**
+ * Sauvegarde ou met à jour une story dans Firestore.
+ * Si la story possède un ID, elle est mise à jour (l'ID est retiré avant l'update), 
+ * sinon elle est créée.
+ * @param {Object} story - L'objet story à sauvegarder
+ */
 async function saveStory(story) {
     if (story.id) {
         const id = story.id;
@@ -99,6 +114,13 @@ async function saveStory(story) {
     }
 }
 
+/**
+ * Met à jour la position d'une story en modifiant sa colonne et son ordre.
+ * Utilisé pour le drag & drop des stories entre colonnes.
+ * @param {string} storyId - L'identifiant de la story à déplacer
+ * @param {string} newColumnId - L'identifiant de la nouvelle colonne
+ * @param {number} newOrder - Le nouvel ordre dans la colonne
+ */
 async function updateStoryPosition(storyId, newColumnId, newOrder) {
     await db.collection('stories').doc(storyId).update({
         columnId: newColumnId,

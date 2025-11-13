@@ -1,12 +1,10 @@
+
+
 // State
-let projects = [];
-let currentProjectId = null;
 let columns = [];
 let stories = [];
 let draggedCard = null;
 let db;
-let unsubscribeColumns = null;
-let unsubscribeStories = null;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,54 +16,34 @@ function initializeFirebase() {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
 
-    // Load projects first
-    loadProjects();
+    // Load data and set up real-time listeners
+    setupRealtimeListeners();
     setupEventListeners();
 }
 
 function setupRealtimeListeners() {
-    // Unsubscribe from previous listeners if any
-    if (unsubscribeColumns) unsubscribeColumns();
-    if (unsubscribeStories) unsubscribeStories();
-
-    if (!currentProjectId) return;
-
-    // Listen to columns for current project
-    unsubscribeColumns = db.collection('columns')
-        .where('projectId', '==', currentProjectId)
-        .orderBy('order')
-        .onSnapshot((snapshot) => {
-            columns = [];
-            snapshot.forEach((doc) => {
-                columns.push({ id: doc.id, ...doc.data() });
-            });
-            renderBoard();
+    // Listen to columns
+    db.collection('columns').orderBy('order').onSnapshot((snapshot) => {
+        columns = [];
+        snapshot.forEach((doc) => {
+            columns.push({ id: doc.id, ...doc.data() });
         });
+        renderBoard();
+    });
 
-    // Listen to stories for current project
-    unsubscribeStories = db.collection('stories')
-        .where('projectId', '==', currentProjectId)
-        .orderBy('order')
-        .onSnapshot((snapshot) => {
-            stories = [];
-            snapshot.forEach((doc) => {
-                stories.push({ id: doc.id, ...doc.data() });
-            });
-            renderBoard();
+    // Listen to stories
+    db.collection('stories').orderBy('order').onSnapshot((snapshot) => {
+        stories = [];
+        snapshot.forEach((doc) => {
+            stories.push({ id: doc.id, ...doc.data() });
         });
+        renderBoard();
+    });
 }
 
 function setupEventListeners() {
-    // Project select
-    document.getElementById('project-select').addEventListener('change', handleProjectChange);
-    document.getElementById('add-project-btn').addEventListener('click', openProjectModal);
-
     // Add column button
     document.getElementById('add-column-btn').addEventListener('click', openColumnModal);
-
-    // Project form
-    document.getElementById('project-form').addEventListener('submit', handleProjectSubmit);
-    document.getElementById('cancel-project-btn').addEventListener('click', closeProjectModal);
 
     // Column form
     document.getElementById('column-form').addEventListener('submit', handleColumnSubmit);
@@ -90,98 +68,12 @@ function setupEventListeners() {
     });
 }
 
-// Firebase Functions
-async function loadProjects() {
-    const snapshot = await db.collection('projects').orderBy('createdAt').get();
-    projects = [];
-    snapshot.forEach((doc) => {
-        projects.push({ id: doc.id, ...doc.data() });
-    });
-
-    // Migration: if no projects exist but columns/stories do, create default project
-    if (projects.length === 0) {
-        const columnsSnapshot = await db.collection('columns').limit(1).get();
-        if (!columnsSnapshot.empty) {
-            console.log('Migrating existing data to default project...');
-            await migrateExistingData();
-            // Reload projects after migration
-            const newSnapshot = await db.collection('projects').orderBy('createdAt').get();
-            projects = [];
-            newSnapshot.forEach((doc) => {
-                projects.push({ id: doc.id, ...doc.data() });
-            });
-        }
-    }
-
-    // If still no projects, create a default one
-    if (projects.length === 0) {
-        const defaultProject = {
-            name: 'Default Project',
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        };
-        const docRef = await db.collection('projects').add(defaultProject);
-        projects.push({ id: docRef.id, ...defaultProject });
-    }
-
-    // Set current project and render dropdown
-    currentProjectId = projects[0].id;
-    renderProjectSelect();
-    setupRealtimeListeners();
-}
-
-async function migrateExistingData() {
-    // Create default project
-    const defaultProject = {
-        name: 'Default Project',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    };
-    const docRef = await db.collection('projects').add(defaultProject);
-    const projectId = docRef.id;
-
-    // Update all existing columns
-    const columnsSnapshot = await db.collection('columns').get();
-    const columnBatch = db.batch();
-    columnsSnapshot.forEach((doc) => {
-        columnBatch.update(doc.ref, { projectId: projectId });
-    });
-    await columnBatch.commit();
-
-    // Update all existing stories
-    const storiesSnapshot = await db.collection('stories').get();
-    const storyBatch = db.batch();
-    storiesSnapshot.forEach((doc) => {
-        storyBatch.update(doc.ref, { projectId: projectId });
-    });
-    await storyBatch.commit();
-
-    console.log('Migration completed!');
-}
-
-function renderProjectSelect() {
-    const select = document.getElementById('project-select');
-    select.innerHTML = '';
-
-    projects.forEach(project => {
-        const option = document.createElement('option');
-        option.value = project.id;
-        option.textContent = project.name;
-        option.selected = project.id === currentProjectId;
-        select.appendChild(option);
-    });
-}
-
-async function saveProject(project) {
-    if (project.id) {
-        await db.collection('projects').doc(project.id).update(project);
-    } else {
-        project.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-        const docRef = await db.collection('projects').add(project);
-        return docRef.id;
-    }
-}
-
+/**
+ * Sauvegarde ou met à jour une colonne dans Firestore.
+ * Si la colonne possède un ID, elle est mise à jour, sinon elle est créée.
+ * @param {Object} column - L'objet colonne à sauvegarder
+ */
 async function saveColumn(column) {
-    column.projectId = currentProjectId;
     if (column.id) {
         await db.collection('columns').doc(column.id).update(column);
     } else {
@@ -189,6 +81,11 @@ async function saveColumn(column) {
     }
 }
 
+/**
+ * Supprime une colonne et toutes les stories associées.
+ * Utilise un batch pour supprimer toutes les stories en une seule transaction.
+ * @param {string} columnId - L'identifiant de la colonne à supprimer
+ */
 async function deleteColumn(columnId) {
     await db.collection('columns').doc(columnId).delete();
 
@@ -201,8 +98,13 @@ async function deleteColumn(columnId) {
     await batch.commit();
 }
 
+/**
+ * Sauvegarde ou met à jour une story dans Firestore.
+ * Si la story possède un ID, elle est mise à jour (l'ID est retiré avant l'update), 
+ * sinon elle est créée.
+ * @param {Object} story - L'objet story à sauvegarder
+ */
 async function saveStory(story) {
-    story.projectId = currentProjectId;
     if (story.id) {
         const id = story.id;
         delete story.id;
@@ -212,6 +114,13 @@ async function saveStory(story) {
     }
 }
 
+/**
+ * Met à jour la position d'une story en modifiant sa colonne et son ordre.
+ * Utilisé pour le drag & drop des stories entre colonnes.
+ * @param {string} storyId - L'identifiant de la story à déplacer
+ * @param {string} newColumnId - L'identifiant de la nouvelle colonne
+ * @param {number} newOrder - Le nouvel ordre dans la colonne
+ */
 async function updateStoryPosition(storyId, newColumnId, newOrder) {
     await db.collection('stories').doc(storyId).update({
         columnId: newColumnId,
@@ -299,15 +208,6 @@ function createCardElement(story) {
 }
 
 // Modal Functions
-function openProjectModal() {
-    document.getElementById('project-modal').classList.add('show');
-    document.getElementById('project-form').reset();
-}
-
-function closeProjectModal() {
-    document.getElementById('project-modal').classList.remove('show');
-}
-
 function openColumnModal() {
     document.getElementById('column-modal').classList.add('show');
     document.getElementById('column-form').reset();
@@ -341,35 +241,13 @@ function closeStoryModal() {
 }
 
 // Event Handlers
-async function handleProjectChange(e) {
-    currentProjectId = e.target.value;
-    setupRealtimeListeners();
-}
-
-async function handleProjectSubmit(e) {
-    e.preventDefault();
-
-    const name = document.getElementById('project-name').value;
-    const project = { name };
-
-    const projectId = await saveProject(project);
-    projects.push({ id: projectId, name });
-
-    // Switch to new project
-    currentProjectId = projectId;
-    renderProjectSelect();
-    setupRealtimeListeners();
-    closeProjectModal();
-}
-
 async function handleColumnSubmit(e) {
     e.preventDefault();
 
     const name = document.getElementById('column-name').value;
     const column = {
         name,
-        order: columns.length,
-        projectId: currentProjectId
+        order: columns.length
     };
 
     await saveColumn(column);

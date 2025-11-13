@@ -12,6 +12,12 @@
     <div class="container">
         <header>
             <h1>Kanban Board</h1>
+            <div class="project-controls">
+                <select id="project-select" class="project-select">
+                    <option value="">Loading projects...</option>
+                </select>
+                <button id="add-project-btn" class="btn-secondary">+ New Project</button>
+            </div>
             <button id="add-column-btn" class="btn-primary">+ Add Column</button>
         </header>
 
@@ -64,11 +70,27 @@
         </div>
     </div>
 
+    <!-- Modal for creating project -->
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Create Project</h2>
+            <form id="project-form">
+                <div class="form-group">
+                    <label for="project-name">Project Name:</label>
+                    <input type="text" id="project-name" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Create</button>
+                    <button type="button" id="cancel-project-btn" class="btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <script src="config.js"></script>
     <script src="app.js"></script>
-
 </body>
 
 </html>

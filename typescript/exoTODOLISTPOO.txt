@@ -1,0 +1,53 @@
+Exercice : Gestionnaire de Tâches (Todo List)
+
+Créer une application de gestion de tâches en JavaScript avec la POO.
+Durée : 2 heures
+
+Vous devez développer un système pour gérer des tâches quotidiennes. Chaque tâche a un titre, une description, une priorité et un statut.
+
+Partie 1 : Classe Task (30 min)
+Créez une classe Task avec :
+Attributs :
+
+title (string) : titre de la tâche
+description (string) : description détaillée
+priority (string) : "basse", "moyenne" ou "haute"
+isCompleted (boolean) : false par défaut
+
+
+Méthodes :
+
+complete() : marque la tâche comme terminée
+updatePriority(newPriority) : modifie la priorité
+getDescription() : retourne une chaîne formatée avec les infos de la tâche
+
+
+Partie 2 : Classe TaskManager (45 min)
+Créez une classe TaskManager avec :
+Attributs :
+
+tasks (array) : liste des tâches
+nextId (number) : pour générer des IDs uniques
+
+Méthodes :
+
+addTask(title, description, priority) : ajoute une nouvelle tâche
+removeTask(id) : supprime une tâche par son ID
+getTaskById(id) : trouve une tâche par son ID
+getAllTasks() : retourne toutes les tâches
+getCompletedTasks() : retourne les tâches terminées
+getPendingTasks() : retourne les tâches en cours
+getTasksByPriority(priority) : filtre par priorité
+getStatistics() : retourne un objet avec le nombre total, terminées, en cours
+
+
+Partie 3 : Utilisation et Tests (30 min)
+Testez votre code en créant :
+
+Un gestionnaire de tâches
+Au moins 5 tâches différentes avec diverses priorités
+Marquez certaines tâches comme terminées
+Affichez les statistiques
+Filtrez par priorité "haute"
+Affichez toutes les tâches en cours
+

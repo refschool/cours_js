@@ -145,7 +145,7 @@
                     <span class="stat-value" id="wpm">0</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-label">Fautes</span>
+                    <span class="stat-label">Différences</span>
                     <span class="stat-value errors" id="errors">0</span>
                 </div>
             </div>
@@ -260,19 +260,29 @@ console.log("Sum of 10 and 20:", calculateSum(10, 30));`;
 
             function calculateErrors() {
                 const typedText = editor.getValue();
-                const typedWords = typedText.trim().split(/\s+/).filter(word => word.length > 0);
-                const referenceWords = referenceText.trim().split(/\s+/).filter(word => word.length > 0);
 
+                // Calculer le nombre de caractères différents
                 let errors = 0;
-                const maxLength = Math.max(typedWords.length, referenceWords.length);
+                const maxLength = Math.max(typedText.length, referenceText.length);
 
+                // Comparer caractère par caractère
                 for (let i = 0; i < maxLength; i++) {
-                    if (typedWords[i] !== referenceWords[i]) {
+                    const typedChar = i < typedText.length ? typedText[i] : '';
+                    const refChar = i < referenceText.length ? referenceText[i] : '';
+
+                    if (typedChar !== refChar) {
                         errors++;
                     }
                 }
 
                 document.getElementById('errors').textContent = errors;
+
+                // Arrêter automatiquement le timer si plus aucune différence
+                if (errors === 0 && isRunning) {
+                    stopTimer();
+                    alert('🎉 Félicitations ! Texte parfaitement corrigé en ' +
+                        document.getElementById('timerDisplay').textContent + ' !');
+                }
             }
 
             function updateDisplay() {

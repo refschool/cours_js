@@ -4,24 +4,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monaco Editor - Dark Theme</title>
+    <title>Monaco Editor - Test de vitesse de frappe</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             overflow: hidden;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1e1e1e;
+        }
+
+        #toolbar {
+            background: #252526;
+            padding: 10px 20px;
+            border-bottom: 1px solid #3e3e42;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        #timer {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            width: 100%;
+        }
+
+        #timerDisplay {
+            color: #4ec9b0;
+            font-size: 28px;
+            font-weight: bold;
+            font-family: 'Consolas', monospace;
+            min-width: 120px;
+        }
+
+        #stats {
+            display: flex;
+            gap: 25px;
+            color: #cccccc;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            color: #858585;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Consolas', monospace;
+        }
+
+        .stat-value.errors {
+            color: #f48771;
+        }
+
+        #timerControls {
+            margin-left: auto;
+            display: flex;
+            gap: 10px;
+        }
+
+        #timerControls button {
+            background: #a03030;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #timerControls button:hover {
+            background: #c04040;
+        }
+
+        #timerControls button:disabled {
+            background: #555555;
+            cursor: not-allowed;
+        }
+
+        #mainContent {
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 70px);
         }
 
         #container {
-            width: 100vw;
-            height: 100vh;
+            flex: 1;
+            border-bottom: 2px solid #3e3e42;
+        }
+
+        #referencePanel {
+            height: 250px;
+            background: #1e1e1e;
+            border-top: 2px solid #007acc;
+            overflow: auto;
+        }
+
+        #referenceHeader {
+            background: #2d2d30;
+            padding: 8px 15px;
+            color: #4ec9b0;
+            font-size: 13px;
+            font-weight: bold;
+            border-bottom: 1px solid #3e3e42;
+        }
+
+        #referenceContent {
+            padding: 15px;
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            white-space: pre-wrap;
         }
     </style>
 </head>
 
 <body>
-    <div id="container"></div>
+    <div id="toolbar">
+        <div id="timer">
+            <div id="timerDisplay">00:00</div>
+            <div id="stats">
+                <div class="stat-item">
+                    <span class="stat-label">Caractères</span>
+                    <span class="stat-value" id="charCount">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Mots/min</span>
+                    <span class="stat-value" id="wpm">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Fautes</span>
+                    <span class="stat-value errors" id="errors">0</span>
+                </div>
+            </div>
+            <div id="timerControls">
+                <button id="stopBtn" onclick="stopTimer()" disabled>⏹️ Arrêter</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mainContent">
+        <div id="container"></div>
+        <div id="referencePanel">
+            <div id="referenceHeader">✅ Texte de référence (correct)</div>
+            <div id="referenceContent"></div>
+        </div>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.44.0/min/vs/loader.min.js"></script>
     <script>
@@ -32,31 +172,38 @@
         });
 
         require(['vs/editor/editor.main'], function () {
-            const editor = monaco.editor.create(document.getElementById('container'), {
-                value: `// Bienvenue dans Monaco Editor
-// Raccourcis clavier disponibles :
-//
-// CTRL + F : Rechercher
-// CTRL + H : Rechercher et remplacer
-// CTRL + C : Copier
-// CTRL + X : Couper
-// CTRL + V : Coller
-// CTRL + Z : Annuler
-// CTRL + Y : Refaire
-// CTRL + A : Tout sélectionner
-// CTRL + D : Sélectionner le mot suivant
-// CTRL + / : Commenter/décommenter
-// ALT + ↑/↓ : Déplacer la ligne
-// SHIFT + ALT + ↑/↓ : Dupliquer la ligne
-// CTRL + L : Sélectionner la ligne
-// CTRL + Shift + K : Supprimer la ligne
-// CTRL + ] : Indenter
-// CTRL + [ : Désindenter
-// F11 : Plein écran
+            // Texte de référence (correct)
+            const referenceText = `function calculateSum(a, b) {
+    return a + b;
+}
 
-function exemple() {
-    console.log("Commencez à coder !");
-}`,
+const numbers = [1, 2, 3, 4, 5];
+const total = numbers.reduce((acc, num) => acc + num, 0);
+
+console.log("Total:", total);
+console.log("Sum of 10 and 20:", calculateSum(10, 20));`;
+
+            // Texte avec des erreurs (à corriger)
+            const textWithErrors = `function calculateSum(a, b) {
+    return a - b;
+}
+
+const numbers = [1, 2, 3, 4];
+const total = numbers.reduce((acc, num) => acc + num, 0);
+
+console.log("Totale:", total);
+console.log("Sum of 10 and 20:", calculateSum(10, 30));`;
+
+            // Afficher le texte de référence dans le panneau du bas
+            document.getElementById('referenceContent').textContent = referenceText;
+
+            let timerInterval = null;
+            let seconds = 0;
+            let isRunning = false;
+            let initialCharCount = 0;
+
+            const editor = monaco.editor.create(document.getElementById('container'), {
+                value: textWithErrors,
                 language: 'javascript',
                 theme: 'vs-dark',
                 automaticLayout: true,
@@ -71,17 +218,94 @@ function exemple() {
                 cursorBlinking: 'smooth',
                 cursorSmoothCaretAnimation: 'on',
                 smoothScrolling: true,
-                formatOnPaste: true,
-                formatOnType: true,
-                quickSuggestions: true,
-                suggestOnTriggerCharacters: true,
-                acceptSuggestionOnEnter: 'on',
-                tabCompletion: 'on',
+                formatOnPaste: false,
+                formatOnType: false,
+                quickSuggestions: false,
+                suggestOnTriggerCharacters: false,
+                acceptSuggestionOnEnter: 'off',
+                tabCompletion: 'off',
                 mouseWheelZoom: true,
                 contextmenu: true,
                 find: {
                     autoFindInSelection: 'never',
                     seedSearchStringFromSelection: 'always'
+                }
+            });
+
+            function startTimer() {
+                if (!isRunning) {
+                    isRunning = true;
+                    initialCharCount = 0;
+                    document.getElementById('stopBtn').disabled = false;
+                    timerInterval = setInterval(updateTimer, 1000);
+                }
+            }
+
+            window.stopTimer = function () {
+                if (isRunning) {
+                    isRunning = false;
+                    if (timerInterval) {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                    }
+                    document.getElementById('stopBtn').disabled = true;
+                    calculateErrors();
+                }
+            };
+
+            function updateTimer() {
+                seconds++;
+                updateDisplay();
+            }
+
+            function calculateErrors() {
+                const typedText = editor.getValue();
+                const typedWords = typedText.trim().split(/\s+/).filter(word => word.length > 0);
+                const referenceWords = referenceText.trim().split(/\s+/).filter(word => word.length > 0);
+
+                let errors = 0;
+                const maxLength = Math.max(typedWords.length, referenceWords.length);
+
+                for (let i = 0; i < maxLength; i++) {
+                    if (typedWords[i] !== referenceWords[i]) {
+                        errors++;
+                    }
+                }
+
+                document.getElementById('errors').textContent = errors;
+            }
+
+            function updateDisplay() {
+                const mins = Math.floor(seconds / 60);
+                const secs = seconds % 60;
+                document.getElementById('timerDisplay').textContent =
+                    `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+
+                const currentCharCount = editor.getValue().length;
+                const charsTyped = currentCharCount - initialCharCount;
+                document.getElementById('charCount').textContent = charsTyped;
+
+                // Calcul mots/min (en moyenne 5 caractères = 1 mot)
+                const words = charsTyped / 5;
+                const minutes = seconds / 60;
+                const wpm = minutes > 0 ? Math.round(words / minutes) : 0;
+                document.getElementById('wpm').textContent = wpm;
+
+                // Calculer les fautes en temps réel
+                if (isRunning) {
+                    calculateErrors();
+                }
+            }
+
+            // Démarrage automatique dès la première frappe
+            let hasStarted = false;
+            editor.onDidChangeModelContent(() => {
+                if (!hasStarted && !isRunning) {
+                    hasStarted = true;
+                    startTimer();
+                }
+                if (isRunning) {
+                    updateDisplay();
                 }
             });
 
@@ -92,6 +316,9 @@ function exemple() {
             window.addEventListener('resize', () => {
                 editor.layout();
             });
+
+            // Initialiser l'affichage
+            updateDisplay();
         });
     </script>
 </body>
